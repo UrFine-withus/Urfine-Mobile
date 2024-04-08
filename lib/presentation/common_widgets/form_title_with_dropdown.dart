@@ -51,6 +51,9 @@ class _FormTitleWithDropDownState extends State<FormTitleWithDropDown> {
           width: double.infinity,
           height: 51.h,
           child: DropDownTextField(
+            textStyle: TextStyle(
+              color: kBlackColor,
+            ),
             textFieldDecoration: InputDecoration(
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(7),

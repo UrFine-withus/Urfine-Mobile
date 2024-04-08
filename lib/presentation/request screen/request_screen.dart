@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:urfine/presentation/common_widgets/form_title_with_dropdown.dart';
 import 'package:urfine/presentation/common_widgets/form_title_with_textfield.dart';
-import 'package:urfine/presentation/common_widgets/title_with_text_filed.dart';
 import 'package:urfine/presentation/core/colors.dart';
 import 'package:urfine/presentation/core/const_widgets.dart';
 
@@ -83,6 +82,44 @@ class RequestScreen extends StatelessWidget {
               FormTitleWithDropDown(
                 title: "Address",
                 dropDownList: [],
+              ),
+              kHeight20,
+              Row(
+                children: [
+                  Expanded(
+                    child: FormTitleWithTextField(
+                      title: "Sp02 level",
+                      hintText: "(optional)",
+                    ),
+                  ),
+                  kWidth15,
+                  Expanded(
+                    child: FormTitleWithTextField(
+                      title: "Blood Pressure",
+                      hintText: "(optional)",
+                    ),
+                  ),
+                ],
+              ),
+              kHeight30,
+              ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: kLightColor,
+                  padding: EdgeInsets.symmetric(
+                    vertical: 9.h,
+                    horizontal: 54.w,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.r),
+                  ),
+                ),
+                child: Text("Submit",
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w600,
+                      color: kWhiteColor,
+                    )),
               ),
             ],
           ),

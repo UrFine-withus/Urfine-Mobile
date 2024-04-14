@@ -49,7 +49,9 @@ class DietSuggestionWidget extends StatelessWidget {
                   shadowColor: kBlackColor.withOpacity(0.7),
                   overlayColor: kDarkColor,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, "/dietSugggstion");
+                },
                 child: Text(
                   "Get Suggestions",
                   style: TextStyle(

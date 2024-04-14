@@ -18,12 +18,12 @@ class HomeScreen extends StatelessWidget {
     {
       "name": "Med Records",
       "image": "assets/home page/medrec.png",
-      "page": "",
+      "page": "/medrec",
     },
     {
       "name": "Health Logs",
       "image": "assets/home page/heart.png",
-      "page": "",
+      "page": "/healthLogs",
     },
     {
       "name": "Emergency Contacts",

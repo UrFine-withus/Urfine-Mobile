@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:urfine/presentation/core/colors.dart';
 import 'package:urfine/presentation/core/const_widgets.dart';
+import 'package:urfine/presentation/emergency/widgets/emergency_contacts_category_tile.dart';
 
 class EmergencyContactsScreen extends StatelessWidget {
   EmergencyContactsScreen({super.key});
@@ -37,92 +39,101 @@ class EmergencyContactsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _EmergencyContactsAppBar(),
-          SizedBox(
-            height: 50.h,
-          ),
-          GridView.builder(
-            padding: EdgeInsets.only(
-              left: 26.0.w,
-              right: 26.0.w,
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _EmergencyContactsAppBar(),
+            SizedBox(
+              height: 50.h,
             ),
-            shrinkWrap: true,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 26.w,
-                mainAxisSpacing: 36.h),
-            itemCount: 4,
-            itemBuilder: (context, index) {
-              return EmergencyContactsCategoryTitle(
-                emergencyCategory: emergencyCategory,
-                index: index,
-              );
-            },
-          ),
-          SizedBox(
-            height: 50.h,
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 26.w),
-            child: Text(
-              "Want to Contact us?",
-              style: TextStyle(
-                fontSize: 20.sp,
-                color: Color(0xff000000),
-                fontWeight: FontWeight.w400,
+            GridView.builder(
+              padding: EdgeInsets.only(
+                left: 26.0.w,
+                right: 26.0.w,
+              ),
+              shrinkWrap: true,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 26.w,
+                  mainAxisSpacing: 36.h),
+              itemCount: 4,
+              itemBuilder: (context, index) {
+                return EmergencyContactsCategoryTile(
+                  emergencyCategory: emergencyCategory,
+                  index: index,
+                );
+              },
+            ),
+            SizedBox(
+              height: 50.h,
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 26.w),
+              child: Text(
+                "Want to Contact us?",
+                style: TextStyle(
+                  fontSize: 20.sp,
+                  color: Color(0xff000000),
+                  fontWeight: FontWeight.w400,
+                ),
               ),
             ),
-          ),
-        ],
+            kHeight20,
+            _ContactUsRow(
+              icon: Icons.phone,
+              text: "+234 123 456 7890",
+            ),
+            kHeight10,
+            _ContactUsRow(
+              icon: Icons.smartphone,
+              text: "+91 7306561022",
+            ),
+            kHeight10,
+            _ContactUsRow(
+              icon: Icons.pin_drop_sharp,
+              text: '''Pandhuvalliyil Kizhakkethil,
+Chengannur, Mulakuzha,
+Kerala 689505''',
+            ),
+            kHeight20,
+          ],
+        ),
       ),
     );
   }
 }
 
-class EmergencyContactsCategoryTitle extends StatelessWidget {
-  EmergencyContactsCategoryTitle({
-    Key? key,
-    required this.emergencyCategory,
-    required this.index,
+class _ContactUsRow extends StatelessWidget {
+  const _ContactUsRow({
+    super.key,
+    required this.icon,
+    required this.text,
   });
-
-  int index;
-  final List<Map<String, String>> emergencyCategory;
-
+  final IconData icon;
+  final String text;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Color(int.parse(emergencyCategory[index]["color"]!)),
-        borderRadius: BorderRadius.circular(20.r),
-      ),
-      child: Column(
-        children: [
-          const Spacer(),
-          Image.asset(
-            emergencyCategory[index]["image"]!,
-            height: 56.dg,
-            width: 56.dg,
-            fit: BoxFit.contain,
+    return Row(
+      children: [
+        SizedBox(
+          width: 26.w,
+        ),
+        Icon(
+          icon,
+          size: 30.dg,
+          color: kLightColor,
+        ),
+        kWidth10,
+        Text(
+          text,
+          style: TextStyle(
+            fontSize: 13.sp,
+            color: kBlackColor,
+            fontWeight: FontWeight.w400,
           ),
-          SizedBox(
-            height: 18.h,
-          ),
-          Text(
-            emergencyCategory[index]["title"]!,
-            style: TextStyle(
-              fontSize: 15.sp,
-              color: Color(int.parse(emergencyCategory[index]["textColor"]!)),
-              fontWeight: FontWeight.w600,
-            ),
-            textAlign: TextAlign.center,
-          ),
-          const Spacer(),
-        ],
-      ),
+        )
+      ],
     );
   }
 }

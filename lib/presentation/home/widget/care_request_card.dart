@@ -66,7 +66,9 @@ class CareRequestCard extends StatelessWidget {
                         overlayColor: kDarkColor.withOpacity(0.8),
                       ),
                       iconAlignment: IconAlignment.end,
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamed(context, "/request");
+                      },
                       icon: Icon(
                         Icons.arrow_forward_ios_rounded,
                         size: 15.sp,

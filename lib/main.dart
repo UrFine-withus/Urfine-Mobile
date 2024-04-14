@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:urfine/presentation/core/colors.dart';
+import 'package:urfine/presentation/diet%20suggestion/diet_suggestion_screen.dart';
+import 'package:urfine/presentation/emergency/contacts_list.dart';
 import 'package:urfine/presentation/emergency/emergency_contacts_screen.dart';
+import 'package:urfine/presentation/healthlogs%20screen/health_logs_screen.dart';
 import 'package:urfine/presentation/home/home_screen.dart';
 import 'package:urfine/presentation/login%20screen/login_screen.dart';
+import 'package:urfine/presentation/med%20records%20screen/med_records_screen.dart';
+import 'package:urfine/presentation/med%20records%20screen/widgets/view_prescription.dart';
 import 'package:urfine/presentation/request%20screen/request_screen.dart';
 import 'package:urfine/presentation/signup%20screen/signup_screen.dart';
 import 'package:urfine/presentation/splash%20screen/splash_screen.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:urfine/presentation/user%20details/user_details.dart';
+import 'package:urfine/presentation/welcome/welcome_screen.dart';
 
 main(List<String> args) async {
   runApp(const MyApp());
@@ -31,7 +37,7 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: kWhiteColor,
         ),
         //setting the initial route to the splash screen
-        home: RequestScreen(),
+        home: WelcomeScreen(),
 
         onGenerateRoute: (settings) {
           return PageRouteBuilder(
@@ -48,7 +54,16 @@ class MyApp extends StatelessWidget {
                 return HomeScreen();
               } else if (settings.name == '/emergency') {
                 return EmergencyContactsScreen();
+              } else if (settings.name == '/healthLogs') {
+                return HealthLogsScreen();
+              } else if (settings.name == '/request') {
+                return RequestScreen();
+              } else if (settings.name == '/medrec') {
+                return MedRecordsScreen();
+              } else if (settings.name == '/dietSugggstion') {
+                return DietSuggestionScreen();
               }
+
               return const SizedBox();
             },
             transitionsBuilder:

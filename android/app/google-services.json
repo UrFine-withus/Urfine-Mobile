@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "222296357735",
+    "project_id": "urfine-55e3c",
+    "storage_bucket": "urfine-55e3c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:222296357735:android:bcfd64e453edab9014cdc2",
+        "android_client_info": {
+          "package_name": "com.example.urfine"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBWa62NqaI7HJTX9krv5F8Nuu_0aGsfS-0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

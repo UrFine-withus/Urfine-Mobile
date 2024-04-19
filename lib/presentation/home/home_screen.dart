@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:urfine/application/authentication/authentication_bloc.dart';
+import 'package:urfine/domain/di/injectable.dart';
+import 'package:urfine/domain/token_manager/user_data_model.dart';
 import 'package:urfine/presentation/core/colors.dart';
 import 'package:urfine/presentation/core/const_widgets.dart';
 import 'package:urfine/presentation/home/widget/care_request_card.dart';
@@ -34,40 +38,70 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.only(
-            left: 20.0.sp,
-            right: 20.0.sp,
-            top: 20.0.sp,
-          ),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                //top container of home screen with the choices to go to different pages
-                HomeTopChoicesContainer(choises: choises),
-                kHeight20,
-                //palliative care request card to navigate to the palliative care request page
-                CareRequestCard(),
-                kHeight20,
-                //diet suggestion widget to navigate to the diet suggestion page
-                DietSuggestionWidget()
-              ],
+      body: BlocConsumer<AuthenticationBloc, AuthenticationState>(
+        listener: (context, state) {
+          state.logout.fold(
+            () {},
+            (a) => a.fold(
+              (l) {
+                showUrFineSnackbar(context, "something went wrong");
+              },
+              (r) {
+                Navigator.pushNamedAndRemoveUntil(
+                    context, "/login", (route) => false);
+              },
             ),
-          ),
-        ),
+          );
+        },
+        builder: (context, state) {
+          return Stack(
+            children: [
+              SafeArea(
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    left: 20.0.sp,
+                    right: 20.0.sp,
+                    top: 20.0.sp,
+                  ),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        //top container of home screen with the choices to go to different pages
+                        HomeTopChoicesContainer(choises: choises),
+                        kHeight20,
+                        //palliative care request card to navigate to the palliative care request page
+                        CareRequestCard(),
+                        kHeight20,
+                        //diet suggestion widget to navigate to the diet suggestion page
+                        DietSuggestionWidget()
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              if (state.isLoading)
+                Container(
+                  width: double.infinity,
+                  height: double.infinity,
+                  color: kBlackColor.withOpacity(0.3),
+                  child: loadingWidget,
+                )
+            ],
+          );
+        },
       ),
     );
   }
 }
 
 class HomeTopChoicesContainer extends StatelessWidget {
-  const HomeTopChoicesContainer({
+  HomeTopChoicesContainer({
     super.key,
     required this.choises,
   });
   final List<Map<String, String>> choises;
-
+  final name =
+      "${getIt<UserDataModel>().name}${getIt<UserDataModel>().name.isEmpty ? "" : "!"}";
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -94,7 +128,7 @@ class HomeTopChoicesContainer extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "Hi, Nived !",
+                "Hi, $name",
                 style: TextStyle(
                   fontSize: 21.0.sp,
                   fontWeight: FontWeight.w500,

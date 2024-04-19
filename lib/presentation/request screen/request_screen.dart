@@ -1,3 +1,4 @@
+import 'package:dropdown_textfield/dropdown_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:urfine/presentation/common_widgets/form_title_with_dropdown.dart';
@@ -6,8 +7,26 @@ import 'package:urfine/presentation/core/colors.dart';
 import 'package:urfine/presentation/core/const_widgets.dart';
 
 class RequestScreen extends StatelessWidget {
-  const RequestScreen({super.key});
-
+   RequestScreen({super.key});
+  final TextEditingController _detailsController = TextEditingController();
+  final TextEditingController _equipmentsController = TextEditingController();
+  final TextEditingController _sp02Controller = TextEditingController();
+  final TextEditingController _bpController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
+  final TextEditingController _doctorNeededController = TextEditingController();
+  final TextEditingController _nurseAssistanceController = TextEditingController();
+  List<DropDownValueModel> doctorNeeded = const [
+    DropDownValueModel(name: 'Yes', value: "yes"),
+    DropDownValueModel(name: 'No', value: "no"),
+  ];
+  List<DropDownValueModel> nurseAssistance = const [
+    DropDownValueModel(name: 'Yes', value: "yes"),
+    DropDownValueModel(name: 'No', value: "no"),
+  ];
+  List<DropDownValueModel> address = const [
+    DropDownValueModel(name: 'Home', value: "home"),
+    DropDownValueModel(name: 'Hospital', value: "hospital"),
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,6 +73,7 @@ class RequestScreen extends StatelessWidget {
               FormTitleWithTextField(
                 title: "Details",
                 isLarge: true,
+                controller: _detailsController,
               ),
               kHeight20,
               Row(
@@ -62,6 +82,7 @@ class RequestScreen extends StatelessWidget {
                     child: FormTitleWithDropDown(
                       dropDownList: [],
                       title: "Doctor needed?",
+                      controller: _doctorNeededController,
                     ),
                   ),
                   kWidth15,
@@ -69,6 +90,7 @@ class RequestScreen extends StatelessWidget {
                     child: FormTitleWithDropDown(
                       title: "Nurse Assistance",
                       dropDownList: [],
+                      controller: _nurseAssistanceController,
                     ),
                   ),
                 ],
@@ -77,10 +99,12 @@ class RequestScreen extends StatelessWidget {
               FormTitleWithTextField(
                 title: "Any Equipments needed?",
                 hintText: "Specify them",
+                controller: _equipmentsController,
               ),
               kHeight20,
               FormTitleWithDropDown(
                 title: "Address",
+                controller: _addressController,
                 dropDownList: [],
               ),
               kHeight20,
@@ -90,6 +114,7 @@ class RequestScreen extends StatelessWidget {
                     child: FormTitleWithTextField(
                       title: "Sp02 level",
                       hintText: "(optional)",
+                      controller: _sp02Controller,
                     ),
                   ),
                   kWidth15,
@@ -97,6 +122,7 @@ class RequestScreen extends StatelessWidget {
                     child: FormTitleWithTextField(
                       title: "Blood Pressure",
                       hintText: "(optional)",
+                      controller: _bpController,
                     ),
                   ),
                 ],

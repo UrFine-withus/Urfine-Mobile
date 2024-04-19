@@ -36,8 +36,8 @@ class LargeGradientButton extends StatelessWidget {
               buttonText,
               style: TextStyle(
                 color: kWhiteColor,
-                fontSize: 25.sp,
-                fontWeight: FontWeight.w500,
+                fontSize: buttonText.length < 10 ? 25.sp : 20.sp,
+                fontWeight: FontWeight.w600,
               ),
             ),
           ),

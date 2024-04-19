@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dropdown_textfield/dropdown_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,10 +12,11 @@ class FormTitleWithDropDown extends StatefulWidget {
     super.key,
     required this.dropDownList,
     required this.title,
+    required this.controller,
   });
   final String title;
   final List<DropDownValueModel> dropDownList;
-
+  final TextEditingController controller;
   @override
   State<FormTitleWithDropDown> createState() => _FormTitleWithDropDownState();
 }
@@ -38,13 +42,14 @@ class _FormTitleWithDropDownState extends State<FormTitleWithDropDown> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        AutoSizeText(
           widget.title,
           style: TextStyle(
             fontSize: 15.0.sp,
             color: kBlackColor,
             fontWeight: FontWeight.w300,
           ),
+          maxLines: 1,
         ),
         kHeight5,
         SizedBox(
@@ -88,7 +93,15 @@ class _FormTitleWithDropDownState extends State<FormTitleWithDropDown> {
             },
             dropDownItemCount: 6,
             dropDownList: widget.dropDownList,
-            onChanged: (val) {},
+            onChanged: (val) {
+              if (val == null || val is String) {
+                widget.controller.clear();
+              } else {
+                final value = val as DropDownValueModel;
+
+                widget.controller.text = value.value;
+              }
+            },
           ),
         ),
       ],

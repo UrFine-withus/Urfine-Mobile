@@ -1,7 +1,7 @@
-
-
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:urfine/application/authentication/authentication_bloc.dart';
 import 'package:urfine/presentation/core/colors.dart';
 import 'package:urfine/presentation/core/const_widgets.dart';
 
@@ -63,7 +63,9 @@ class LogoutAlert extends StatelessWidget {
               kHeight10,
               GestureDetector(
                 onTap: () {
-                  Navigator.pop(context);
+                  BlocProvider.of<AuthenticationBloc>(context).add(
+                    const AuthenticationEvent.logout(),
+                  );
                 },
                 child: Container(
                   width: 179,

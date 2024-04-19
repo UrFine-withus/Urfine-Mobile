@@ -6,8 +6,14 @@ import 'package:urfine/presentation/core/const_widgets.dart';
 enum TextFieldType { email, password }
 
 class TitleWithTextField extends StatelessWidget {
-  const TitleWithTextField({super.key, required this.type});
+  TitleWithTextField(
+      {super.key,
+      required this.type,
+      required this.controller,
+      this.obscureText});
+  final TextEditingController controller;
   final TextFieldType type;
+  final ValueNotifier<bool>? obscureText;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -37,32 +43,50 @@ class TitleWithTextField extends StatelessWidget {
               ],
               borderRadius: BorderRadius.circular(10.0.r),
             ),
-            child: TextFormField(
-              decoration: InputDecoration(
-                hintText: 'Enter ${type.name}',
-                hintStyle: TextStyle(
-                  fontSize: 15.0.sp,
-                  color: const Color(0xff888888),
-                  fontWeight: FontWeight.w400,
-                ),
-                filled: true,
-                fillColor: kWhiteColor,
-                border: const OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(7.4)),
-                  borderSide: BorderSide(color: Colors.transparent),
-                ),
-                enabledBorder: const OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(7.4)),
-                  borderSide: BorderSide(color: Colors.transparent),
-                ),
-                focusedBorder: const OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(7.4)),
-                  borderSide: BorderSide(
-                    color: kLightColor,
-                  ),
-                ),
-              ),
-            ),
+            child: ValueListenableBuilder(
+                valueListenable: obscureText ?? ValueNotifier(false),
+                builder: (context, value, child) {
+                  return TextFormField(
+                    obscureText: type == TextFieldType.password ? value : false,
+                    controller: controller,
+                    decoration: InputDecoration(
+                      suffixIcon: type == TextFieldType.password
+                          ? GestureDetector(
+                              child: Icon(
+                                value ? Icons.visibility_off : Icons.visibility,
+                                color: kLightColor,
+                              ),
+                              onTap: () {
+                                obscureText!.value = !obscureText!.value;
+                                obscureText!.notifyListeners();
+                              },
+                            )
+                          : null,
+                      hintText: 'Enter ${type.name}',
+                      hintStyle: TextStyle(
+                        fontSize: 15.0.sp,
+                        color: const Color(0xff888888),
+                        fontWeight: FontWeight.w400,
+                      ),
+                      filled: true,
+                      fillColor: kWhiteColor,
+                      border: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(7.4)),
+                        borderSide: BorderSide(color: Colors.transparent),
+                      ),
+                      enabledBorder: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(7.4)),
+                        borderSide: BorderSide(color: Colors.transparent),
+                      ),
+                      focusedBorder: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(7.4)),
+                        borderSide: BorderSide(
+                          color: kLightColor,
+                        ),
+                      ),
+                    ),
+                  );
+                }),
           ),
         ),
       ],

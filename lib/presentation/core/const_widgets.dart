@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:urfine/presentation/core/colors.dart';
 
 final kHeight5 = SizedBox(
   height: 5.h,
@@ -37,3 +39,26 @@ final kWidth25 = SizedBox(
 final kWidth30 = SizedBox(
   width: 30.w,
 );
+final loadingWidget = Center(
+  child: SpinKitPulse(
+    color: kExtraLightColor,
+    size: 90.dg,
+  ),
+);
+
+showUrFineSnackbar(BuildContext context, String message) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      backgroundColor: kExtraLightColor,
+      content: Text(
+        message,
+        style: TextStyle(
+          color: kBlackColor,
+          fontSize: 16.0.sp,
+          fontWeight: FontWeight.w400,
+        ),
+      ),
+      duration: const Duration(seconds: 2),
+    ),
+  );
+}

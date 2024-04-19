@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:urfine/domain/emergency/model/emergency_model.dart';
 import 'package:urfine/presentation/core/colors.dart';
 import 'package:urfine/presentation/core/const_widgets.dart';
 import 'package:urfine/presentation/emergency/widgets/emergency_contacts_category_tile.dart';
@@ -12,28 +13,28 @@ class EmergencyContactsScreen extends StatelessWidget {
       "image": "assets/emergency/hospitals.png",
       "color": "0xffCCFFE7",
       "textColor": "0xff258980",
-      "route": "/hospital_contacts"
+      "type": EmergencyContactType.hospital
     },
     {
       "title": "Ambulance\ncontacts",
       "image": "assets/emergency/ambulance.png",
       "color": "0xffDBE9FF",
       "textColor": "0xff5396FF",
-      "route": "/ambulance_contacts"
+      "type": EmergencyContactType.ambulance
     },
     {
       "title": "Blood bank\ncontacts",
       "image": "assets/emergency/blood.png",
       "color": "0xffFFDCDC",
       "textColor": "0xffFE5A5A",
-      "route": "/police_contacts"
+      "type": EmergencyContactType.bloodBank
     },
     {
       "title": "Clinic\ncontacts",
       "image": "assets/emergency/syringe.png",
       "color": "0xffEDDCFF",
       "textColor": "0xff9C4FED",
-      "route": "/fire_service_contacts"
+      "type": EmergencyContactType.clinic
     },
   ];
   @override

@@ -47,7 +47,7 @@ class WelcomeScreen extends StatelessWidget {
                 LargeGradientButton(
                   buttonText: 'Next',
                   onPressed: () {
-                    Navigator.pushNamed(context, '/login');
+                    Navigator.pushReplacementNamed(context, '/login');
                   },
                 ),
                 kHeight10,

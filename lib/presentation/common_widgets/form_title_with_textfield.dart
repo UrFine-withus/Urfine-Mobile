@@ -10,12 +10,13 @@ class FormTitleWithTextField extends StatelessWidget {
     this.keyboardType = TextInputType.text,
     this.hintText = '',
     this.isLarge = false,
+    required this.controller,
   });
   final bool isLarge;
   final String title;
   final TextInputType keyboardType;
   final String hintText;
-
+  final TextEditingController controller;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -34,6 +35,7 @@ class FormTitleWithTextField extends StatelessWidget {
           width: double.infinity,
           height: isLarge ? 96.h : 51.h,
           child: TextField(
+            controller: controller,
             maxLines: null,
             expands: true,
             keyboardType: keyboardType,

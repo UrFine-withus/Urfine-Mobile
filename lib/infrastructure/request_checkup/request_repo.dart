@@ -4,19 +4,22 @@ import 'package:injectable/injectable.dart';
 import 'package:urfine/core/base_url.dart';
 import 'package:urfine/domain/di/injectable.dart';
 import 'package:urfine/domain/failure/failure.dart';
+import 'package:urfine/domain/request_checkup/i_request_repo.dart';
+import 'package:urfine/domain/request_checkup/model/request_model.dart';
 import 'package:urfine/domain/token_manager/user_data_model.dart';
-import 'package:urfine/domain/user_details/i_user_details_repo.dart';
-import 'package:urfine/domain/user_details/model/add_user_model.dart';
 
-@LazySingleton(as: IUserDetailsRepo)
-class UserDetailsRepo extends IUserDetailsRepo {
+@LazySingleton(as: IRequestRepo)
+class RequestRepo extends IRequestRepo {
   @override
-  Future<Either<MainFailure, void>> addUser(AddUserModel model) async {
+  Future<Either<MainFailure, void>> checkupRequest(
+      RequestModel requestModel) async {
+    final uid = getIt<UserDataModel>().uid;
     try {
-      final respose = await Dio(BaseOptions())
-          .post('$baseUrl/userinfo', data: model.toJson());
-      if (respose.statusCode == 200) {
-        getIt.get<UserDataModel>().name = model.name;
+      final response = await Dio(BaseOptions()).post(
+        "$baseUrl/checkups?userId=$uid",
+        data: requestModel.toJson(),
+      );
+      if (response.statusCode == 200) {
         return right(null);
       } else {
         return left(MainFailure.serverFailure());

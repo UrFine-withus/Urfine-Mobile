@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -38,6 +37,8 @@ class TokenManagerRepo extends ITokenManagerRepo {
 
   @override
   Future removeUser() async {
+    getIt.get<UserDataModel>().name = '';
+    getIt.get<UserDataModel>().uid = '';
     final sharedPref = await SharedPreferences.getInstance();
     sharedPref.remove('name');
     sharedPref.remove('uid');

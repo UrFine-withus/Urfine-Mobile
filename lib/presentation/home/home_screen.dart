@@ -100,10 +100,11 @@ class HomeTopChoicesContainer extends StatelessWidget {
     required this.choises,
   });
   final List<Map<String, String>> choises;
-  final name =
-      "${getIt<UserDataModel>().name}${getIt<UserDataModel>().name.isEmpty ? "" : "!"}";
+  String name = "";
   @override
   Widget build(BuildContext context) {
+    name =
+        "${getIt<UserDataModel>().name}${getIt<UserDataModel>().name.isEmpty ? "" : "!"}";
     return Container(
       width: double.infinity,
       padding: EdgeInsets.only(
@@ -162,6 +163,7 @@ class HomeTopChoicesContainer extends StatelessWidget {
           ),
           kHeight10,
           GridView.builder(
+            physics: NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             itemCount: choises.length,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

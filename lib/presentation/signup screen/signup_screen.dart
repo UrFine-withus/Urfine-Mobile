@@ -126,7 +126,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             if (isOtpVerified)
                               TitleWithTextField(
                                 type: TextFieldType.password,
-                                controller: emailController,
+                                controller: passwordController,
                                 obscureText: passwordObscure,
                               ),
                             SizedBox(

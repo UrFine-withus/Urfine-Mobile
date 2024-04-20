@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:chatview/chatview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,6 +21,37 @@ class _DietSuggestionScreenState extends State<DietSuggestionScreen> {
     BlocProvider.of<DietryChatBloc>(context).add(DietryChatEvent(msg));
     sendMessageController.clear();
   }
+
+  late final ChatController chatController;
+  final ScrollController scrollController = ScrollController();
+  @override
+  initState() {
+    super.initState();
+    final dietState = BlocProvider.of<DietryChatBloc>(context).state;
+    chatController = ChatController(
+      initialMessageList: [...dietState.messages],
+      scrollController: scrollController,
+      chatUsers: [
+        ChatUser(id: '1', name: 'me'),
+        ChatUser(
+          id: '2',
+          name: 'gemini',
+        )
+      ],
+    );
+    BlocProvider.of<DietryChatBloc>(context)
+        .add(DietryChatEvent.init(chatController));
+    scrollController.addListener(() {
+      if (scrollController.position.atEdge) {
+        if (scrollController.position.pixels == 0) {
+          log('At Bottom');
+        } else {
+          log('At Top');
+        }
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +73,7 @@ class _DietSuggestionScreenState extends State<DietSuggestionScreen> {
             showTypingIndicator: state.isTyping,
             appBar: _ChatViewAppbar(),
             currentUser: ChatUser(id: '1', name: 'me'),
-            chatController: state.chatController,
+            chatController: chatController,
             chatViewState: ChatViewState.hasMessages,
             chatBubbleConfig: ChatBubbleConfiguration(
               outgoingChatBubbleConfig: ChatBubble(

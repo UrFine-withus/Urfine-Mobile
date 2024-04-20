@@ -4,6 +4,7 @@ import 'package:urfine/application/add_user_data/add_user_data_bloc.dart';
 import 'package:urfine/application/authentication/authentication_bloc.dart';
 import 'package:urfine/application/emergency_contacts/emergency_contacts_bloc.dart';
 import 'package:urfine/application/dietry_plan_chat/dietry_chat_bloc.dart';
+import 'package:urfine/application/request_checkup/request_checkup_bloc.dart';
 import 'package:urfine/domain/di/injectable.dart';
 import 'package:urfine/domain/token_manager/user_data_model.dart';
 import 'package:urfine/presentation/core/colors.dart';
@@ -54,6 +55,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<EmergencyContactsBloc>(
           create: (context) => getIt<EmergencyContactsBloc>(),
+        ),
+        BlocProvider<RequestCheckupBloc>(
+          create: (context) => getIt<RequestCheckupBloc>(),
         ),
       ],
       child: ScreenUtilInit(

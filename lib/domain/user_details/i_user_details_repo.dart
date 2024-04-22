@@ -4,4 +4,5 @@ import 'package:urfine/domain/user_details/model/add_user_model.dart';
 
 abstract class IUserDetailsRepo {
   Future<Either<MainFailure, void>> addUser(AddUserModel model);
+  Future<Either<MainFailure, AddUserModel>> getUserDetails();
 }

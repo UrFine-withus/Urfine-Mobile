@@ -195,7 +195,7 @@ class AuthRepository extends IAuthRepo {
           await Dio(BaseOptions()).post('$baseUrl/userdata/check?userId=$uid');
       if (response.statusCode == 200) {
         final String name =
-            response.data.containsKey('name') ? response.data['name'] : "";
+            response.data.containsKey('user') ? response.data['user'] : "";
         getIt.get<UserDataModel>().name = name;
         return right(null);
       } else {

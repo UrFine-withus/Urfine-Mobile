@@ -33,6 +33,19 @@ class AddUserModel {
       'sufferedDiseases': sufferedDiseases.toJson(),
     };
   }
+  factory AddUserModel.fromJson(Map<String, dynamic> json) {
+    return AddUserModel(
+      userID: json['_userID'],
+      name: json['name'],
+      age: json['age'].toString(),
+      gender: json['gender'],
+      address: json['address'],
+      height: json['height'],
+      weight: json['weight'],
+      bloodGroup: json['bloodGroup'],
+      sufferedDiseases: SufferedDiseases.fromJson(json['sufferedDiseases']),
+    );
+  }
 }
 
 class SufferedDiseases {
@@ -54,5 +67,13 @@ class SufferedDiseases {
       'hepatitis': hepatitis,
       'allergies': allergies,
     };
+  }
+  factory SufferedDiseases.fromJson(Map<String, dynamic> json) {
+    return SufferedDiseases(
+      chickenPox: json['chickenPox'],
+      measles: json['measeles'],
+      hepatitis: json['hepatitis'],
+      allergies: json['allergies'],
+    );
   }
 }

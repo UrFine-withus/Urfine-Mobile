@@ -5,6 +5,7 @@ import 'package:urfine/core/base_url.dart';
 import 'package:urfine/domain/di/injectable.dart';
 import 'package:urfine/domain/failure/failure.dart';
 import 'package:urfine/domain/request_checkup/i_request_repo.dart';
+import 'package:urfine/domain/dietry_plan/model/message_db_model.dart';
 import 'package:urfine/domain/request_checkup/model/request_model.dart';
 import 'package:urfine/domain/token_manager/user_data_model.dart';
 
@@ -35,4 +36,5 @@ class RequestRepo extends IRequestRepo {
       }
     }
   }
+
 }

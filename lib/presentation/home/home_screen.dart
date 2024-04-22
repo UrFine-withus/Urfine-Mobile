@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:urfine/application/authentication/authentication_bloc.dart';
+import 'package:urfine/application/dietry_plan_chat/dietry_chat_bloc.dart';
 import 'package:urfine/domain/di/injectable.dart';
 import 'package:urfine/domain/token_manager/user_data_model.dart';
 import 'package:urfine/presentation/core/colors.dart';
@@ -17,7 +20,7 @@ class HomeScreen extends StatelessWidget {
     {
       "name": "Check-up History",
       "image": "assets/home page/checkup.png",
-      "page": ""
+      "page": "/checkupHistory"
     },
     {
       "name": "Med Records",
@@ -37,6 +40,19 @@ class HomeScreen extends StatelessWidget {
   ];
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      final state = BlocProvider.of<DietryChatBloc>(context).state;
+      if (!state.isOldMessagesRetrived) {
+        log("retriving messages");
+        BlocProvider.of<DietryChatBloc>(context)
+            .add(DietryChatEvent.retriveMsgDb());
+      }
+
+      if (state.userDetails == null) {
+        BlocProvider.of<DietryChatBloc>(context)
+            .add(const DietryChatEvent.fetchUserDetails());
+      }
+    });
     return Scaffold(
       body: BlocConsumer<AuthenticationBloc, AuthenticationState>(
         listener: (context, state) {

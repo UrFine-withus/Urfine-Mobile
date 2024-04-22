@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive/hive.dart';
 import 'package:urfine/application/add_user_data/add_user_data_bloc.dart';
 import 'package:urfine/application/authentication/authentication_bloc.dart';
 import 'package:urfine/application/emergency_contacts/emergency_contacts_bloc.dart';
 import 'package:urfine/application/dietry_plan_chat/dietry_chat_bloc.dart';
 import 'package:urfine/application/request_checkup/request_checkup_bloc.dart';
 import 'package:urfine/domain/di/injectable.dart';
+import 'package:urfine/domain/dietry_plan/model/message_db_model.dart';
 import 'package:urfine/domain/token_manager/user_data_model.dart';
+import 'package:urfine/presentation/check%20up%20history/check_up_history_screen.dart';
 import 'package:urfine/presentation/core/colors.dart';
 import 'package:urfine/presentation/diet%20suggestion/diet_suggestion_screen.dart';
 import 'package:urfine/presentation/emergency/contacts_list.dart';
@@ -25,6 +28,7 @@ import 'package:urfine/presentation/user%20details/user_details.dart';
 import 'package:urfine/presentation/welcome/welcome_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,6 +36,10 @@ main(List<String> args) async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await Hive.initFlutter();
+  if (!Hive.isAdapterRegistered(MessageDBModelAdapter().typeId)) {
+    Hive.registerAdapter(MessageDBModelAdapter());
+  }
   getIt.registerSingleton<UserDataModel>(UserDataModel());
   runApp(const MyApp());
 }
@@ -99,6 +107,8 @@ class MyApp extends StatelessWidget {
                   return WelcomeScreen();
                 } else if (settings.name == '/forgotPassword') {
                   return ForgotPasswordScreen();
+                } else if (settings.name == '/checkupHistory') {
+                  return CheckUpHistoryScreen();
                 }
 
                 return const SizedBox();

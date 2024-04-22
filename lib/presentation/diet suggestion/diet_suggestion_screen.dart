@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:urfine/application/dietry_plan_chat/dietry_chat_bloc.dart';
 import 'package:urfine/presentation/core/colors.dart';
+import 'package:urfine/presentation/core/const_widgets.dart';
 
 class DietSuggestionScreen extends StatefulWidget {
   DietSuggestionScreen({super.key});
@@ -21,7 +22,7 @@ class _DietSuggestionScreenState extends State<DietSuggestionScreen> {
     BlocProvider.of<DietryChatBloc>(context).add(DietryChatEvent(msg));
     sendMessageController.clear();
   }
-
+  
   late final ChatController chatController;
   final ScrollController scrollController = ScrollController();
   @override
@@ -60,92 +61,104 @@ class _DietSuggestionScreenState extends State<DietSuggestionScreen> {
           // TODO: implement listener
         },
         builder: (context, state) {
-          return ChatView(
-            typeIndicatorConfig: TypeIndicatorConfiguration(
-              indicatorSize: 10,
-              flashingCircleBrightColor: kExtraLightColor,
-              flashingCircleDarkColor: kLightColor,
-            ),
-            profileCircleConfig: ProfileCircleConfiguration(
-              profileImageUrl:
-                  "https://cdn.dribbble.com/userupload/3498881/file/original-a35eafc54c7747f5884849626abaec9d.png?resize=400x0",
-            ),
-            showTypingIndicator: state.isTyping,
-            appBar: _ChatViewAppbar(),
-            currentUser: ChatUser(id: '1', name: 'me'),
-            chatController: chatController,
-            chatViewState: ChatViewState.hasMessages,
-            chatBubbleConfig: ChatBubbleConfiguration(
-              outgoingChatBubbleConfig: ChatBubble(
-                color: kExtraLightColor,
-                borderRadius: BorderRadius.circular(20),
-                textStyle: TextStyle(
-                  color: kBlackColor,
-                  fontSize: 15.sp,
-                  fontWeight: FontWeight.w400,
+          return Stack(
+            children: [
+              ChatView(
+                typeIndicatorConfig: TypeIndicatorConfiguration(
+                  indicatorSize: 10,
+                  flashingCircleBrightColor: kExtraLightColor,
+                  flashingCircleDarkColor: kLightColor,
                 ),
-              ),
-              inComingChatBubbleConfig: ChatBubble(
-                color: kLightColor.withOpacity(0.7),
-                borderRadius: BorderRadius.circular(20),
-                textStyle: TextStyle(
-                  color: kBlackColor,
-                  fontSize: 15.sp,
-                  fontWeight: FontWeight.w400,
+                profileCircleConfig: ProfileCircleConfiguration(
+                  profileImageUrl:
+                      "https://cdn.dribbble.com/userupload/3498881/file/original-a35eafc54c7747f5884849626abaec9d.png?resize=400x0",
                 ),
-                senderNameTextStyle: TextStyle(fontSize: 0),
-              ),
-            ),
-            chatBackgroundConfig: ChatBackgroundConfiguration(
-              messageTimeTextStyle: TextStyle(
-                color: kBlackColor,
-                fontSize: 10.sp,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-            sendMessageBuilder: (replyMessage) {
-              return Container(
-                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 2),
-                margin: EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                    color: kWhiteColor,
-                    borderRadius: BorderRadius.circular(100),
-                    border: Border.all(
+                showTypingIndicator: state.isTyping,
+                appBar: _ChatViewAppbar(),
+                currentUser: ChatUser(id: '1', name: 'me'),
+                chatController: chatController,
+                chatViewState: ChatViewState.hasMessages,
+                chatBubbleConfig: ChatBubbleConfiguration(
+                  outgoingChatBubbleConfig: ChatBubble(
+                    color: kExtraLightColor,
+                    borderRadius: BorderRadius.circular(20),
+                    textStyle: TextStyle(
                       color: kBlackColor,
-                      width: 1,
-                    )),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        controller: sendMessageController,
-                        decoration: InputDecoration(
-                          hintText: 'You wanna ask anything?',
-                          border: InputBorder.none,
-                        ),
-                      ),
+                      fontSize: 15.sp,
+                      fontWeight: FontWeight.w400,
                     ),
-                    IconButton(
-                      onPressed: () {
-                        onSendTap(sendMessageController.text, MessageType.text);
-                      },
-                      icon: Icon(
-                        Icons.send_sharp,
-                        color: kLightColor,
-                      ),
+                  ),
+                  inComingChatBubbleConfig: ChatBubble(
+                    color: kLightColor.withOpacity(0.7),
+                    borderRadius: BorderRadius.circular(20),
+                    textStyle: TextStyle(
+                      color: kBlackColor,
+                      fontSize: 15.sp,
+                      fontWeight: FontWeight.w400,
                     ),
-                  ],
+                    senderNameTextStyle: TextStyle(fontSize: 0),
+                  ),
                 ),
-              );
-            },
-            featureActiveConfig: FeatureActiveConfig(
-              enableSwipeToReply: false,
-              enableSwipeToSeeTime: true,
-              enableDoubleTapToLike: false,
-              enableReactionPopup: false,
-              enableReplySnackBar: false,
-              enableOtherUserProfileAvatar: false,
-            ),
+                chatBackgroundConfig: ChatBackgroundConfiguration(
+                  messageTimeTextStyle: TextStyle(
+                    color: kBlackColor,
+                    fontSize: 10.sp,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                sendMessageBuilder: (replyMessage) {
+                  return Container(
+                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 2),
+                    margin: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                        color: kWhiteColor,
+                        borderRadius: BorderRadius.circular(100),
+                        border: Border.all(
+                          color: kBlackColor,
+                          width: 1,
+                        )),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            controller: sendMessageController,
+                            decoration: InputDecoration(
+                              hintText: 'You wanna ask anything?',
+                              border: InputBorder.none,
+                            ),
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            onSendTap(
+                                sendMessageController.text, MessageType.text);
+                          },
+                          icon: Icon(
+                            Icons.send_sharp,
+                            color: kLightColor,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+                featureActiveConfig: FeatureActiveConfig(
+                  enableSwipeToReply: false,
+                  enableSwipeToSeeTime: true,
+                  enableDoubleTapToLike: false,
+                  enableReactionPopup: false,
+                  enableReplySnackBar: false,
+                  enableOtherUserProfileAvatar: false,
+                ),
+              ),
+              if (state.isLoading)
+                Container(
+                  width: double.infinity,
+                  height: double.infinity,
+                  color: kBlackColor.withOpacity(0.3),
+                  child: loadingWidget,
+                )
+            ],
           );
         },
       ),

@@ -60,8 +60,10 @@ extension GetItInjectableX on _i1.GetIt {
           gh<_i10.IUserDetailsRepo>(),
           gh<_i7.ITokenManagerRepo>(),
         ));
-    gh.factory<_i18.DietryChatBloc>(
-        () => _i18.DietryChatBloc(gh<_i3.IDietryPlanRepo>()));
+    gh.factory<_i18.DietryChatBloc>(() => _i18.DietryChatBloc(
+          gh<_i3.IDietryPlanRepo>(),
+          gh<_i10.IUserDetailsRepo>(),
+        ));
     gh.factory<_i19.AuthenticationBloc>(() => _i19.AuthenticationBloc(
           gh<_i12.IAuthRepo>(),
           gh<_i7.ITokenManagerRepo>(),

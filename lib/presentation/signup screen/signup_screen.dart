@@ -25,6 +25,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final ValueNotifier<bool> passwordObscure = ValueNotifier<bool>(true);
+  final ValueNotifier<int> resendOtpTimerNotifier = ValueNotifier<int>(0);
+  _resetTimer() async {
+    if (resendOtpTimerNotifier.value > 0) {
+      Future.delayed(const Duration(seconds: 1), () {
+        resendOtpTimerNotifier.value = resendOtpTimerNotifier.value - 1;
+        resendOtpTimerNotifier.notifyListeners();
+        _resetTimer();
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,6 +48,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
               setState(() {
                 otpSent = true;
               });
+              resendOtpTimerNotifier.value = 60;
+              _resetTimer();
             });
           });
           state.signupFailureOrSuccessOption.fold(() {}, (a) {
@@ -80,32 +93,49 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               visible: !isOtpVerified,
                               child: Align(
                                 alignment: Alignment.centerRight,
-                                child: GestureDetector(
-                                  onTap: () {
-                                    emailController.text =
-                                        emailController.text.trim();
-                                    if (emailController.text.isEmpty) {
-                                      showUrFineSnackbar(
-                                          context, "Enter a valid email");
-                                      return;
-                                    }
-                                    FocusScope.of(context).unfocus();
-                                    //sending the otp to the user
-                                    BlocProvider.of<AuthenticationBloc>(context)
-                                        .add(AuthenticationEvent.sendOtp(
-                                            emailController.text));
-                                  },
-                                  child: Text(
-                                    otpSent ? "Resend OTP" : "Send OTP",
-                                    style: TextStyle(
-                                      color: kLightColor,
-                                      fontSize: 13.0.sp,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ),
+                                child: ValueListenableBuilder(
+                                    valueListenable: resendOtpTimerNotifier,
+                                    builder: (context, time, _) {
+                                      return GestureDetector(
+                                        onTap: () {
+                                          //if the timer is greater than 0 then dont send the otp
+                                          if (time > 0) {
+                                            return;
+                                          }
+                                          
+                                          emailController.text =
+                                              emailController.text.trim();
+                                          if (emailController.text.isEmpty) {
+                                            showUrFineSnackbar(
+                                                context, "Enter a valid email");
+                                            return;
+                                          }
+                                          FocusScope.of(context).unfocus();
+                                          //sending the otp to the user
+                                          BlocProvider.of<AuthenticationBloc>(
+                                                  context)
+                                              .add(AuthenticationEvent.sendOtp(
+                                                  emailController.text));
+                                        },
+                                        child: Text(
+                                          //checking if otp is sent or not and showing the resend otp button
+                                          otpSent
+                                              ? time > 0
+                                                  ? "Resend OTP (${time}s)"
+                                                  : "Resend OTP"
+                                              : "Send OTP",
+                                          style: TextStyle(
+                                            color: kLightColor.withOpacity(
+                                                time > 0 ? 0.5 : 1.0),
+                                            fontSize: 13.0.sp,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      );
+                                    }),
                               ),
                             ),
+                            //checking if otp is verified or not and showing the text "OTP" if not verified
                             if (!isOtpVerified)
                               Text(
                                 "OTP",
@@ -123,6 +153,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 otpController: passwordController,
                                 keyboardType: TextInputType.number,
                               ),
+                            //checking if otp is verified or not and showing the text "Password" if verified
                             if (isOtpVerified)
                               TitleWithTextField(
                                 type: TextFieldType.password,
@@ -196,6 +227,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ],
                   ),
                 ),
+                //showing the loading widget if the state is loading
                 if (state.isLoading)
                   Container(
                     width: double.infinity,

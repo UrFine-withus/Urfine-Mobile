@@ -20,18 +20,24 @@ mixin _$DietryChatEvent {
   TResult when<TResult extends Object?>(
     TResult Function(String propt) $default, {
     required TResult Function(ChatController chatController) init,
+    required TResult Function() retriveMsgDb,
+    required TResult Function() fetchUserDetails,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
     TResult? Function(String propt)? $default, {
     TResult? Function(ChatController chatController)? init,
+    TResult? Function()? retriveMsgDb,
+    TResult? Function()? fetchUserDetails,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
     TResult Function(String propt)? $default, {
     TResult Function(ChatController chatController)? init,
+    TResult Function()? retriveMsgDb,
+    TResult Function()? fetchUserDetails,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -39,18 +45,24 @@ mixin _$DietryChatEvent {
   TResult map<TResult extends Object?>(
     TResult Function(_DietryChatEvent value) $default, {
     required TResult Function(_Init value) init,
+    required TResult Function(_RetriveMsgDb value) retriveMsgDb,
+    required TResult Function(_FetchUserDetails value) fetchUserDetails,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>(
     TResult? Function(_DietryChatEvent value)? $default, {
     TResult? Function(_Init value)? init,
+    TResult? Function(_RetriveMsgDb value)? retriveMsgDb,
+    TResult? Function(_FetchUserDetails value)? fetchUserDetails,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>(
     TResult Function(_DietryChatEvent value)? $default, {
     TResult Function(_Init value)? init,
+    TResult Function(_RetriveMsgDb value)? retriveMsgDb,
+    TResult Function(_FetchUserDetails value)? fetchUserDetails,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -141,6 +153,8 @@ class _$DietryChatEventImpl implements _DietryChatEvent {
   TResult when<TResult extends Object?>(
     TResult Function(String propt) $default, {
     required TResult Function(ChatController chatController) init,
+    required TResult Function() retriveMsgDb,
+    required TResult Function() fetchUserDetails,
   }) {
     return $default(propt);
   }
@@ -150,6 +164,8 @@ class _$DietryChatEventImpl implements _DietryChatEvent {
   TResult? whenOrNull<TResult extends Object?>(
     TResult? Function(String propt)? $default, {
     TResult? Function(ChatController chatController)? init,
+    TResult? Function()? retriveMsgDb,
+    TResult? Function()? fetchUserDetails,
   }) {
     return $default?.call(propt);
   }
@@ -159,6 +175,8 @@ class _$DietryChatEventImpl implements _DietryChatEvent {
   TResult maybeWhen<TResult extends Object?>(
     TResult Function(String propt)? $default, {
     TResult Function(ChatController chatController)? init,
+    TResult Function()? retriveMsgDb,
+    TResult Function()? fetchUserDetails,
     required TResult orElse(),
   }) {
     if ($default != null) {
@@ -172,6 +190,8 @@ class _$DietryChatEventImpl implements _DietryChatEvent {
   TResult map<TResult extends Object?>(
     TResult Function(_DietryChatEvent value) $default, {
     required TResult Function(_Init value) init,
+    required TResult Function(_RetriveMsgDb value) retriveMsgDb,
+    required TResult Function(_FetchUserDetails value) fetchUserDetails,
   }) {
     return $default(this);
   }
@@ -181,6 +201,8 @@ class _$DietryChatEventImpl implements _DietryChatEvent {
   TResult? mapOrNull<TResult extends Object?>(
     TResult? Function(_DietryChatEvent value)? $default, {
     TResult? Function(_Init value)? init,
+    TResult? Function(_RetriveMsgDb value)? retriveMsgDb,
+    TResult? Function(_FetchUserDetails value)? fetchUserDetails,
   }) {
     return $default?.call(this);
   }
@@ -190,6 +212,8 @@ class _$DietryChatEventImpl implements _DietryChatEvent {
   TResult maybeMap<TResult extends Object?>(
     TResult Function(_DietryChatEvent value)? $default, {
     TResult Function(_Init value)? init,
+    TResult Function(_RetriveMsgDb value)? retriveMsgDb,
+    TResult Function(_FetchUserDetails value)? fetchUserDetails,
     required TResult orElse(),
   }) {
     if ($default != null) {
@@ -274,6 +298,8 @@ class _$InitImpl implements _Init {
   TResult when<TResult extends Object?>(
     TResult Function(String propt) $default, {
     required TResult Function(ChatController chatController) init,
+    required TResult Function() retriveMsgDb,
+    required TResult Function() fetchUserDetails,
   }) {
     return init(chatController);
   }
@@ -283,6 +309,8 @@ class _$InitImpl implements _Init {
   TResult? whenOrNull<TResult extends Object?>(
     TResult? Function(String propt)? $default, {
     TResult? Function(ChatController chatController)? init,
+    TResult? Function()? retriveMsgDb,
+    TResult? Function()? fetchUserDetails,
   }) {
     return init?.call(chatController);
   }
@@ -292,6 +320,8 @@ class _$InitImpl implements _Init {
   TResult maybeWhen<TResult extends Object?>(
     TResult Function(String propt)? $default, {
     TResult Function(ChatController chatController)? init,
+    TResult Function()? retriveMsgDb,
+    TResult Function()? fetchUserDetails,
     required TResult orElse(),
   }) {
     if (init != null) {
@@ -305,6 +335,8 @@ class _$InitImpl implements _Init {
   TResult map<TResult extends Object?>(
     TResult Function(_DietryChatEvent value) $default, {
     required TResult Function(_Init value) init,
+    required TResult Function(_RetriveMsgDb value) retriveMsgDb,
+    required TResult Function(_FetchUserDetails value) fetchUserDetails,
   }) {
     return init(this);
   }
@@ -314,6 +346,8 @@ class _$InitImpl implements _Init {
   TResult? mapOrNull<TResult extends Object?>(
     TResult? Function(_DietryChatEvent value)? $default, {
     TResult? Function(_Init value)? init,
+    TResult? Function(_RetriveMsgDb value)? retriveMsgDb,
+    TResult? Function(_FetchUserDetails value)? fetchUserDetails,
   }) {
     return init?.call(this);
   }
@@ -323,6 +357,8 @@ class _$InitImpl implements _Init {
   TResult maybeMap<TResult extends Object?>(
     TResult Function(_DietryChatEvent value)? $default, {
     TResult Function(_Init value)? init,
+    TResult Function(_RetriveMsgDb value)? retriveMsgDb,
+    TResult Function(_FetchUserDetails value)? fetchUserDetails,
     required TResult orElse(),
   }) {
     if (init != null) {
@@ -342,10 +378,243 @@ abstract class _Init implements DietryChatEvent {
 }
 
 /// @nodoc
+abstract class _$$RetriveMsgDbImplCopyWith<$Res> {
+  factory _$$RetriveMsgDbImplCopyWith(
+          _$RetriveMsgDbImpl value, $Res Function(_$RetriveMsgDbImpl) then) =
+      __$$RetriveMsgDbImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$RetriveMsgDbImplCopyWithImpl<$Res>
+    extends _$DietryChatEventCopyWithImpl<$Res, _$RetriveMsgDbImpl>
+    implements _$$RetriveMsgDbImplCopyWith<$Res> {
+  __$$RetriveMsgDbImplCopyWithImpl(
+      _$RetriveMsgDbImpl _value, $Res Function(_$RetriveMsgDbImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$RetriveMsgDbImpl implements _RetriveMsgDb {
+  const _$RetriveMsgDbImpl();
+
+  @override
+  String toString() {
+    return 'DietryChatEvent.retriveMsgDb()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$RetriveMsgDbImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(String propt) $default, {
+    required TResult Function(ChatController chatController) init,
+    required TResult Function() retriveMsgDb,
+    required TResult Function() fetchUserDetails,
+  }) {
+    return retriveMsgDb();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(String propt)? $default, {
+    TResult? Function(ChatController chatController)? init,
+    TResult? Function()? retriveMsgDb,
+    TResult? Function()? fetchUserDetails,
+  }) {
+    return retriveMsgDb?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(String propt)? $default, {
+    TResult Function(ChatController chatController)? init,
+    TResult Function()? retriveMsgDb,
+    TResult Function()? fetchUserDetails,
+    required TResult orElse(),
+  }) {
+    if (retriveMsgDb != null) {
+      return retriveMsgDb();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_DietryChatEvent value) $default, {
+    required TResult Function(_Init value) init,
+    required TResult Function(_RetriveMsgDb value) retriveMsgDb,
+    required TResult Function(_FetchUserDetails value) fetchUserDetails,
+  }) {
+    return retriveMsgDb(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_DietryChatEvent value)? $default, {
+    TResult? Function(_Init value)? init,
+    TResult? Function(_RetriveMsgDb value)? retriveMsgDb,
+    TResult? Function(_FetchUserDetails value)? fetchUserDetails,
+  }) {
+    return retriveMsgDb?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_DietryChatEvent value)? $default, {
+    TResult Function(_Init value)? init,
+    TResult Function(_RetriveMsgDb value)? retriveMsgDb,
+    TResult Function(_FetchUserDetails value)? fetchUserDetails,
+    required TResult orElse(),
+  }) {
+    if (retriveMsgDb != null) {
+      return retriveMsgDb(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _RetriveMsgDb implements DietryChatEvent {
+  const factory _RetriveMsgDb() = _$RetriveMsgDbImpl;
+}
+
+/// @nodoc
+abstract class _$$FetchUserDetailsImplCopyWith<$Res> {
+  factory _$$FetchUserDetailsImplCopyWith(_$FetchUserDetailsImpl value,
+          $Res Function(_$FetchUserDetailsImpl) then) =
+      __$$FetchUserDetailsImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$FetchUserDetailsImplCopyWithImpl<$Res>
+    extends _$DietryChatEventCopyWithImpl<$Res, _$FetchUserDetailsImpl>
+    implements _$$FetchUserDetailsImplCopyWith<$Res> {
+  __$$FetchUserDetailsImplCopyWithImpl(_$FetchUserDetailsImpl _value,
+      $Res Function(_$FetchUserDetailsImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$FetchUserDetailsImpl implements _FetchUserDetails {
+  const _$FetchUserDetailsImpl();
+
+  @override
+  String toString() {
+    return 'DietryChatEvent.fetchUserDetails()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$FetchUserDetailsImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(String propt) $default, {
+    required TResult Function(ChatController chatController) init,
+    required TResult Function() retriveMsgDb,
+    required TResult Function() fetchUserDetails,
+  }) {
+    return fetchUserDetails();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(String propt)? $default, {
+    TResult? Function(ChatController chatController)? init,
+    TResult? Function()? retriveMsgDb,
+    TResult? Function()? fetchUserDetails,
+  }) {
+    return fetchUserDetails?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(String propt)? $default, {
+    TResult Function(ChatController chatController)? init,
+    TResult Function()? retriveMsgDb,
+    TResult Function()? fetchUserDetails,
+    required TResult orElse(),
+  }) {
+    if (fetchUserDetails != null) {
+      return fetchUserDetails();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_DietryChatEvent value) $default, {
+    required TResult Function(_Init value) init,
+    required TResult Function(_RetriveMsgDb value) retriveMsgDb,
+    required TResult Function(_FetchUserDetails value) fetchUserDetails,
+  }) {
+    return fetchUserDetails(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_DietryChatEvent value)? $default, {
+    TResult? Function(_Init value)? init,
+    TResult? Function(_RetriveMsgDb value)? retriveMsgDb,
+    TResult? Function(_FetchUserDetails value)? fetchUserDetails,
+  }) {
+    return fetchUserDetails?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_DietryChatEvent value)? $default, {
+    TResult Function(_Init value)? init,
+    TResult Function(_RetriveMsgDb value)? retriveMsgDb,
+    TResult Function(_FetchUserDetails value)? fetchUserDetails,
+    required TResult orElse(),
+  }) {
+    if (fetchUserDetails != null) {
+      return fetchUserDetails(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _FetchUserDetails implements DietryChatEvent {
+  const factory _FetchUserDetails() = _$FetchUserDetailsImpl;
+}
+
+/// @nodoc
 mixin _$DietryChatState {
   List<Message> get messages => throw _privateConstructorUsedError;
+  bool get isOldMessagesRetrived => throw _privateConstructorUsedError;
   bool get isTyping => throw _privateConstructorUsedError;
+  bool get isLoading => throw _privateConstructorUsedError;
   ChatController? get chatController => throw _privateConstructorUsedError;
+  AddUserModel? get userDetails => throw _privateConstructorUsedError;
+  Option<Either<MainFailure, void>> get userDetilasFailureOrSuccessOption =>
+      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $DietryChatStateCopyWith<DietryChatState> get copyWith =>
@@ -359,7 +628,13 @@ abstract class $DietryChatStateCopyWith<$Res> {
       _$DietryChatStateCopyWithImpl<$Res, DietryChatState>;
   @useResult
   $Res call(
-      {List<Message> messages, bool isTyping, ChatController? chatController});
+      {List<Message> messages,
+      bool isOldMessagesRetrived,
+      bool isTyping,
+      bool isLoading,
+      ChatController? chatController,
+      AddUserModel? userDetails,
+      Option<Either<MainFailure, void>> userDetilasFailureOrSuccessOption});
 }
 
 /// @nodoc
@@ -376,22 +651,43 @@ class _$DietryChatStateCopyWithImpl<$Res, $Val extends DietryChatState>
   @override
   $Res call({
     Object? messages = null,
+    Object? isOldMessagesRetrived = null,
     Object? isTyping = null,
+    Object? isLoading = null,
     Object? chatController = freezed,
+    Object? userDetails = freezed,
+    Object? userDetilasFailureOrSuccessOption = null,
   }) {
     return _then(_value.copyWith(
       messages: null == messages
           ? _value.messages
           : messages // ignore: cast_nullable_to_non_nullable
               as List<Message>,
+      isOldMessagesRetrived: null == isOldMessagesRetrived
+          ? _value.isOldMessagesRetrived
+          : isOldMessagesRetrived // ignore: cast_nullable_to_non_nullable
+              as bool,
       isTyping: null == isTyping
           ? _value.isTyping
           : isTyping // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
       chatController: freezed == chatController
           ? _value.chatController
           : chatController // ignore: cast_nullable_to_non_nullable
               as ChatController?,
+      userDetails: freezed == userDetails
+          ? _value.userDetails
+          : userDetails // ignore: cast_nullable_to_non_nullable
+              as AddUserModel?,
+      userDetilasFailureOrSuccessOption: null ==
+              userDetilasFailureOrSuccessOption
+          ? _value.userDetilasFailureOrSuccessOption
+          : userDetilasFailureOrSuccessOption // ignore: cast_nullable_to_non_nullable
+              as Option<Either<MainFailure, void>>,
     ) as $Val);
   }
 }
@@ -405,7 +701,13 @@ abstract class _$$InitialImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {List<Message> messages, bool isTyping, ChatController? chatController});
+      {List<Message> messages,
+      bool isOldMessagesRetrived,
+      bool isTyping,
+      bool isLoading,
+      ChatController? chatController,
+      AddUserModel? userDetails,
+      Option<Either<MainFailure, void>> userDetilasFailureOrSuccessOption});
 }
 
 /// @nodoc
@@ -420,22 +722,43 @@ class __$$InitialImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? messages = null,
+    Object? isOldMessagesRetrived = null,
     Object? isTyping = null,
+    Object? isLoading = null,
     Object? chatController = freezed,
+    Object? userDetails = freezed,
+    Object? userDetilasFailureOrSuccessOption = null,
   }) {
     return _then(_$InitialImpl(
       messages: null == messages
           ? _value._messages
           : messages // ignore: cast_nullable_to_non_nullable
               as List<Message>,
+      isOldMessagesRetrived: null == isOldMessagesRetrived
+          ? _value.isOldMessagesRetrived
+          : isOldMessagesRetrived // ignore: cast_nullable_to_non_nullable
+              as bool,
       isTyping: null == isTyping
           ? _value.isTyping
           : isTyping // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
       chatController: freezed == chatController
           ? _value.chatController
           : chatController // ignore: cast_nullable_to_non_nullable
               as ChatController?,
+      userDetails: freezed == userDetails
+          ? _value.userDetails
+          : userDetails // ignore: cast_nullable_to_non_nullable
+              as AddUserModel?,
+      userDetilasFailureOrSuccessOption: null ==
+              userDetilasFailureOrSuccessOption
+          ? _value.userDetilasFailureOrSuccessOption
+          : userDetilasFailureOrSuccessOption // ignore: cast_nullable_to_non_nullable
+              as Option<Either<MainFailure, void>>,
     ));
   }
 }
@@ -445,8 +768,12 @@ class __$$InitialImplCopyWithImpl<$Res>
 class _$InitialImpl implements _Initial {
   const _$InitialImpl(
       {required final List<Message> messages,
+      required this.isOldMessagesRetrived,
       required this.isTyping,
-      this.chatController})
+      required this.isLoading,
+      required this.chatController,
+      required this.userDetails,
+      required this.userDetilasFailureOrSuccessOption})
       : _messages = messages;
 
   final List<Message> _messages;
@@ -458,13 +785,21 @@ class _$InitialImpl implements _Initial {
   }
 
   @override
+  final bool isOldMessagesRetrived;
+  @override
   final bool isTyping;
   @override
+  final bool isLoading;
+  @override
   final ChatController? chatController;
+  @override
+  final AddUserModel? userDetails;
+  @override
+  final Option<Either<MainFailure, void>> userDetilasFailureOrSuccessOption;
 
   @override
   String toString() {
-    return 'DietryChatState(messages: $messages, isTyping: $isTyping, chatController: $chatController)';
+    return 'DietryChatState(messages: $messages, isOldMessagesRetrived: $isOldMessagesRetrived, isTyping: $isTyping, isLoading: $isLoading, chatController: $chatController, userDetails: $userDetails, userDetilasFailureOrSuccessOption: $userDetilasFailureOrSuccessOption)';
   }
 
   @override
@@ -473,15 +808,32 @@ class _$InitialImpl implements _Initial {
         (other.runtimeType == runtimeType &&
             other is _$InitialImpl &&
             const DeepCollectionEquality().equals(other._messages, _messages) &&
+            (identical(other.isOldMessagesRetrived, isOldMessagesRetrived) ||
+                other.isOldMessagesRetrived == isOldMessagesRetrived) &&
             (identical(other.isTyping, isTyping) ||
                 other.isTyping == isTyping) &&
+            (identical(other.isLoading, isLoading) ||
+                other.isLoading == isLoading) &&
             (identical(other.chatController, chatController) ||
-                other.chatController == chatController));
+                other.chatController == chatController) &&
+            (identical(other.userDetails, userDetails) ||
+                other.userDetails == userDetails) &&
+            (identical(other.userDetilasFailureOrSuccessOption,
+                    userDetilasFailureOrSuccessOption) ||
+                other.userDetilasFailureOrSuccessOption ==
+                    userDetilasFailureOrSuccessOption));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType,
-      const DeepCollectionEquality().hash(_messages), isTyping, chatController);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_messages),
+      isOldMessagesRetrived,
+      isTyping,
+      isLoading,
+      chatController,
+      userDetails,
+      userDetilasFailureOrSuccessOption);
 
   @JsonKey(ignore: true)
   @override
@@ -493,15 +845,28 @@ class _$InitialImpl implements _Initial {
 abstract class _Initial implements DietryChatState {
   const factory _Initial(
       {required final List<Message> messages,
+      required final bool isOldMessagesRetrived,
       required final bool isTyping,
-      final ChatController? chatController}) = _$InitialImpl;
+      required final bool isLoading,
+      required final ChatController? chatController,
+      required final AddUserModel? userDetails,
+      required final Option<Either<MainFailure, void>>
+          userDetilasFailureOrSuccessOption}) = _$InitialImpl;
 
   @override
   List<Message> get messages;
   @override
+  bool get isOldMessagesRetrived;
+  @override
   bool get isTyping;
   @override
+  bool get isLoading;
+  @override
   ChatController? get chatController;
+  @override
+  AddUserModel? get userDetails;
+  @override
+  Option<Either<MainFailure, void>> get userDetilasFailureOrSuccessOption;
   @override
   @JsonKey(ignore: true)
   _$$InitialImplCopyWith<_$InitialImpl> get copyWith =>

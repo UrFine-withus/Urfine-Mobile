@@ -6,7 +6,6 @@ import 'package:urfine/domain/failure/failure.dart';
 import 'package:urfine/domain/token_manager/i_token_manager_repo.dart';
 import 'package:urfine/domain/user_details/i_user_details_repo.dart';
 import 'package:urfine/domain/user_details/model/add_user_model.dart';
-import 'package:urfine/infrastructure/token_manager/token_manager.dart';
 
 part 'add_user_data_event.dart';
 part 'add_user_data_state.dart';

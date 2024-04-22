@@ -1,9 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:chatview/chatview.dart';
 import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:urfine/domain/dietry_plan/i_dietry_plan_repo.dart';

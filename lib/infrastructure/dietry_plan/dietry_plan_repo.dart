@@ -1,13 +1,10 @@
 import 'dart:developer';
-import 'dart:io';
-
 import 'package:chatview/chatview.dart';
 import 'package:dartz/dartz.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:injectable/injectable.dart';
-import 'package:urfine/application/dietry_plan_chat/dietry_chat_bloc.dart';
 import 'package:urfine/domain/dietry_plan/i_dietry_plan_repo.dart';
 import 'package:urfine/domain/dietry_plan/model/message_db_model.dart';
 import 'package:urfine/domain/failure/failure.dart';
@@ -18,8 +15,7 @@ class DiertyPlanRepo extends IDietryPlanRepo {
   @override
   Future<Either<MainFailure, String>> getGeminiResponse(
       String propt, AddUserModel? user) async {
-    final apiKey = 'AIzaSyAfqXxzPHx3O993mPd0CqgQP_IYVSnO6PQ';
-
+    final apiKey = dotenv.env['KEY'] ?? "";
     String input = "I am old and I am feeling weak.my question is $propt";
     if (user != null) {
       input =
@@ -32,7 +28,6 @@ class DiertyPlanRepo extends IDietryPlanRepo {
               don't say you cant. i don't need a medical advice,
                just give some suggestions. my question is $propt''';
     }
-
     final model = GenerativeModel(model: 'gemini-pro', apiKey: apiKey);
     final content = [Content.text(input)];
     try {

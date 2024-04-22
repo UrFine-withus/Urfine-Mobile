@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hive/hive.dart';
 import 'package:urfine/application/add_user_data/add_user_data_bloc.dart';
 import 'package:urfine/application/authentication/authentication_bloc.dart';
@@ -40,6 +41,7 @@ main(List<String> args) async {
   if (!Hive.isAdapterRegistered(MessageDBModelAdapter().typeId)) {
     Hive.registerAdapter(MessageDBModelAdapter());
   }
+  await dotenv.load(fileName: "lib/.env");
   getIt.registerSingleton<UserDataModel>(UserDataModel());
   runApp(const MyApp());
 }

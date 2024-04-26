@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:urfine/domain/health_logs/models/health_logs_model.dart';
 import 'package:urfine/presentation/core/colors.dart';
 import 'package:urfine/presentation/core/const_widgets.dart';
 
 class HelathLogCard extends StatelessWidget {
   HelathLogCard({
     super.key,
+    required this.healthLog,
   });
   final colorMap = {
     "High": const Color(0xffFF6072),
     "Normal": const Color(0xFFF7D631),
     "Low": const Color(0xff8AEDBE),
   };
-
+  final HealthLog healthLog;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -40,18 +42,18 @@ class HelathLogCard extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 32.r,
-                backgroundColor: colorMap["Normal"],
+                backgroundColor: colorMap[healthLog.level],
               ),
               CircleAvatar(
                 radius: 25.r,
                 backgroundColor: kWhiteColor,
               ),
               Text(
-                "Normal",
+                healthLog.level,
                 style: TextStyle(
                   fontSize: 11.sp,
                   fontWeight: FontWeight.w800,
-                  color: colorMap["Normal"],
+                  color: colorMap[healthLog.level],
                 ),
               )
             ],
@@ -62,7 +64,7 @@ class HelathLogCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Sugar",
+                  healthLog.label,
                   style: TextStyle(
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w600,
@@ -73,16 +75,16 @@ class HelathLogCard extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      "Current \n150 mg/dL",
+                      "Current \n${healthLog.currentValue}",
                       style: TextStyle(
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w400,
                         color: kBlackColor,
                       ),
                     ),
-                    Spacer(),
+                    kWidth20,
                     Text(
-                      "Current \n150 mg/dL",
+                      "Normal \n${healthLog.normalValue}",
                       style: TextStyle(
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w400,

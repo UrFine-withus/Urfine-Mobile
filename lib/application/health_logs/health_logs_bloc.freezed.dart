@@ -311,8 +311,14 @@ abstract class _FatchLogs implements HealthLogsEvent {
 
 /// @nodoc
 mixin _$HealthLogsState {
-  bool get isLoading => throw _privateConstructorUsedError;
-  List<DateTime> get dates => throw _privateConstructorUsedError;
+  bool get isDatesFetching => throw _privateConstructorUsedError;
+  bool get isLogsFetching => throw _privateConstructorUsedError;
+  LogsDateModel? get dates => throw _privateConstructorUsedError;
+  HealthLogsModel? get logs => throw _privateConstructorUsedError;
+  Option<Either<MainFailure, void>> get fetDatesFailureOrSuccess =>
+      throw _privateConstructorUsedError;
+  Option<Either<MainFailure, void>> get fetchLogsFailureOrSuccess =>
+      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $HealthLogsStateCopyWith<HealthLogsState> get copyWith =>
@@ -325,7 +331,13 @@ abstract class $HealthLogsStateCopyWith<$Res> {
           HealthLogsState value, $Res Function(HealthLogsState) then) =
       _$HealthLogsStateCopyWithImpl<$Res, HealthLogsState>;
   @useResult
-  $Res call({bool isLoading, List<DateTime> dates});
+  $Res call(
+      {bool isDatesFetching,
+      bool isLogsFetching,
+      LogsDateModel? dates,
+      HealthLogsModel? logs,
+      Option<Either<MainFailure, void>> fetDatesFailureOrSuccess,
+      Option<Either<MainFailure, void>> fetchLogsFailureOrSuccess});
 }
 
 /// @nodoc
@@ -341,18 +353,38 @@ class _$HealthLogsStateCopyWithImpl<$Res, $Val extends HealthLogsState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? isLoading = null,
-    Object? dates = null,
+    Object? isDatesFetching = null,
+    Object? isLogsFetching = null,
+    Object? dates = freezed,
+    Object? logs = freezed,
+    Object? fetDatesFailureOrSuccess = null,
+    Object? fetchLogsFailureOrSuccess = null,
   }) {
     return _then(_value.copyWith(
-      isLoading: null == isLoading
-          ? _value.isLoading
-          : isLoading // ignore: cast_nullable_to_non_nullable
+      isDatesFetching: null == isDatesFetching
+          ? _value.isDatesFetching
+          : isDatesFetching // ignore: cast_nullable_to_non_nullable
               as bool,
-      dates: null == dates
+      isLogsFetching: null == isLogsFetching
+          ? _value.isLogsFetching
+          : isLogsFetching // ignore: cast_nullable_to_non_nullable
+              as bool,
+      dates: freezed == dates
           ? _value.dates
           : dates // ignore: cast_nullable_to_non_nullable
-              as List<DateTime>,
+              as LogsDateModel?,
+      logs: freezed == logs
+          ? _value.logs
+          : logs // ignore: cast_nullable_to_non_nullable
+              as HealthLogsModel?,
+      fetDatesFailureOrSuccess: null == fetDatesFailureOrSuccess
+          ? _value.fetDatesFailureOrSuccess
+          : fetDatesFailureOrSuccess // ignore: cast_nullable_to_non_nullable
+              as Option<Either<MainFailure, void>>,
+      fetchLogsFailureOrSuccess: null == fetchLogsFailureOrSuccess
+          ? _value.fetchLogsFailureOrSuccess
+          : fetchLogsFailureOrSuccess // ignore: cast_nullable_to_non_nullable
+              as Option<Either<MainFailure, void>>,
     ) as $Val);
   }
 }
@@ -365,7 +397,13 @@ abstract class _$$HealthLogsStateImplCopyWith<$Res>
       __$$HealthLogsStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool isLoading, List<DateTime> dates});
+  $Res call(
+      {bool isDatesFetching,
+      bool isLogsFetching,
+      LogsDateModel? dates,
+      HealthLogsModel? logs,
+      Option<Either<MainFailure, void>> fetDatesFailureOrSuccess,
+      Option<Either<MainFailure, void>> fetchLogsFailureOrSuccess});
 }
 
 /// @nodoc
@@ -379,18 +417,38 @@ class __$$HealthLogsStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? isLoading = null,
-    Object? dates = null,
+    Object? isDatesFetching = null,
+    Object? isLogsFetching = null,
+    Object? dates = freezed,
+    Object? logs = freezed,
+    Object? fetDatesFailureOrSuccess = null,
+    Object? fetchLogsFailureOrSuccess = null,
   }) {
     return _then(_$HealthLogsStateImpl(
-      isLoading: null == isLoading
-          ? _value.isLoading
-          : isLoading // ignore: cast_nullable_to_non_nullable
+      isDatesFetching: null == isDatesFetching
+          ? _value.isDatesFetching
+          : isDatesFetching // ignore: cast_nullable_to_non_nullable
               as bool,
-      dates: null == dates
-          ? _value._dates
+      isLogsFetching: null == isLogsFetching
+          ? _value.isLogsFetching
+          : isLogsFetching // ignore: cast_nullable_to_non_nullable
+              as bool,
+      dates: freezed == dates
+          ? _value.dates
           : dates // ignore: cast_nullable_to_non_nullable
-              as List<DateTime>,
+              as LogsDateModel?,
+      logs: freezed == logs
+          ? _value.logs
+          : logs // ignore: cast_nullable_to_non_nullable
+              as HealthLogsModel?,
+      fetDatesFailureOrSuccess: null == fetDatesFailureOrSuccess
+          ? _value.fetDatesFailureOrSuccess
+          : fetDatesFailureOrSuccess // ignore: cast_nullable_to_non_nullable
+              as Option<Either<MainFailure, void>>,
+      fetchLogsFailureOrSuccess: null == fetchLogsFailureOrSuccess
+          ? _value.fetchLogsFailureOrSuccess
+          : fetchLogsFailureOrSuccess // ignore: cast_nullable_to_non_nullable
+              as Option<Either<MainFailure, void>>,
     ));
   }
 }
@@ -399,22 +457,29 @@ class __$$HealthLogsStateImplCopyWithImpl<$Res>
 
 class _$HealthLogsStateImpl implements _HealthLogsState {
   const _$HealthLogsStateImpl(
-      {required this.isLoading, required final List<DateTime> dates})
-      : _dates = dates;
+      {required this.isDatesFetching,
+      required this.isLogsFetching,
+      required this.dates,
+      required this.logs,
+      required this.fetDatesFailureOrSuccess,
+      required this.fetchLogsFailureOrSuccess});
 
   @override
-  final bool isLoading;
-  final List<DateTime> _dates;
+  final bool isDatesFetching;
   @override
-  List<DateTime> get dates {
-    if (_dates is EqualUnmodifiableListView) return _dates;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_dates);
-  }
+  final bool isLogsFetching;
+  @override
+  final LogsDateModel? dates;
+  @override
+  final HealthLogsModel? logs;
+  @override
+  final Option<Either<MainFailure, void>> fetDatesFailureOrSuccess;
+  @override
+  final Option<Either<MainFailure, void>> fetchLogsFailureOrSuccess;
 
   @override
   String toString() {
-    return 'HealthLogsState(isLoading: $isLoading, dates: $dates)';
+    return 'HealthLogsState(isDatesFetching: $isDatesFetching, isLogsFetching: $isLogsFetching, dates: $dates, logs: $logs, fetDatesFailureOrSuccess: $fetDatesFailureOrSuccess, fetchLogsFailureOrSuccess: $fetchLogsFailureOrSuccess)';
   }
 
   @override
@@ -422,14 +487,23 @@ class _$HealthLogsStateImpl implements _HealthLogsState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$HealthLogsStateImpl &&
-            (identical(other.isLoading, isLoading) ||
-                other.isLoading == isLoading) &&
-            const DeepCollectionEquality().equals(other._dates, _dates));
+            (identical(other.isDatesFetching, isDatesFetching) ||
+                other.isDatesFetching == isDatesFetching) &&
+            (identical(other.isLogsFetching, isLogsFetching) ||
+                other.isLogsFetching == isLogsFetching) &&
+            (identical(other.dates, dates) || other.dates == dates) &&
+            (identical(other.logs, logs) || other.logs == logs) &&
+            (identical(
+                    other.fetDatesFailureOrSuccess, fetDatesFailureOrSuccess) ||
+                other.fetDatesFailureOrSuccess == fetDatesFailureOrSuccess) &&
+            (identical(other.fetchLogsFailureOrSuccess,
+                    fetchLogsFailureOrSuccess) ||
+                other.fetchLogsFailureOrSuccess == fetchLogsFailureOrSuccess));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, isLoading, const DeepCollectionEquality().hash(_dates));
+  int get hashCode => Object.hash(runtimeType, isDatesFetching, isLogsFetching,
+      dates, logs, fetDatesFailureOrSuccess, fetchLogsFailureOrSuccess);
 
   @JsonKey(ignore: true)
   @override
@@ -441,13 +515,26 @@ class _$HealthLogsStateImpl implements _HealthLogsState {
 
 abstract class _HealthLogsState implements HealthLogsState {
   const factory _HealthLogsState(
-      {required final bool isLoading,
-      required final List<DateTime> dates}) = _$HealthLogsStateImpl;
+      {required final bool isDatesFetching,
+      required final bool isLogsFetching,
+      required final LogsDateModel? dates,
+      required final HealthLogsModel? logs,
+      required final Option<Either<MainFailure, void>> fetDatesFailureOrSuccess,
+      required final Option<Either<MainFailure, void>>
+          fetchLogsFailureOrSuccess}) = _$HealthLogsStateImpl;
 
   @override
-  bool get isLoading;
+  bool get isDatesFetching;
   @override
-  List<DateTime> get dates;
+  bool get isLogsFetching;
+  @override
+  LogsDateModel? get dates;
+  @override
+  HealthLogsModel? get logs;
+  @override
+  Option<Either<MainFailure, void>> get fetDatesFailureOrSuccess;
+  @override
+  Option<Either<MainFailure, void>> get fetchLogsFailureOrSuccess;
   @override
   @JsonKey(ignore: true)
   _$$HealthLogsStateImplCopyWith<_$HealthLogsStateImpl> get copyWith =>

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -133,6 +135,18 @@ class HealthLogsAppbar extends StatelessWidget {
                                     );
                                   },
                                 );
+                                final stringDate = date != null
+                                    ? dates
+                                        .firstWhere(
+                                            (element) => element == date)
+                                        .toString()
+                                        .split(" ")[0]
+                                    : null;
+
+                                if (stringDate != null) {
+                                  BlocProvider.of<HealthLogsBloc>(context).add(
+                                      HealthLogsEvent.fatchLogs(stringDate));
+                                }
                               },
                               style: ElevatedButton.styleFrom(
                                 shape: RoundedRectangleBorder(

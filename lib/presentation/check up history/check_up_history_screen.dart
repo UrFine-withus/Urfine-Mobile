@@ -1,14 +1,24 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:urfine/application/checkup_history/checkup_history_bloc.dart';
 import 'package:urfine/presentation/check%20up%20history/widgets/checkup_history_container.dart';
 import 'package:urfine/presentation/core/colors.dart';
 import 'package:urfine/presentation/core/const_widgets.dart';
 
 class CheckUpHistoryScreen extends StatelessWidget {
   const CheckUpHistoryScreen({super.key});
-  
+
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      final state = BlocProvider.of<CheckupHistoryBloc>(context).state;
+      if (state.checkupHistory == null) {
+        BlocProvider.of<CheckupHistoryBloc>(context).add(CheckupHistoryEvent());
+      }
+    });
     return Scaffold(
       body: Column(
         children: [
@@ -71,27 +81,112 @@ class CheckUpHistoryScreen extends StatelessWidget {
             ),
           ),
           kHeight20,
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15.w),
-            child: Row(
-              children: [
-                Expanded(
+          BlocConsumer<CheckupHistoryBloc, CheckupHistoryState>(
+            listener: (context, state) {
+              state.checkupHistoryFailureorSuccess.fold(
+                () {},
+                (a) {
+                  a.fold((l) {
+                    showUrFineSnackbar(
+                      context,
+                      l.when(
+                        serverFailure: () => "Server under maintenance",
+                        noInternet: () => "No Internet",
+                        otherFailure: () => "Something went wrong",
+                        clientFailure: () => "check your internet connection",
+                        authFailure: (message) {
+                          return message;
+                        },
+                      ),
+                    );
+                  }, (r) {});
+                },
+              );
+            },
+            builder: (context, state) {
+              if (state.isLoading ||
+                  state.checkupHistoryFailureorSuccess.isNone()) {
+                return Expanded(
+                  child: Center(
+                    child: loadingWidget,
+                  ),
+                );
+              }
+              if (state.checkupHistory == null ||
+                  state.checkupHistory!.checkups.isEmpty) {
+                return Expanded(
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.max,
                     children: [
-                      CheckupHistoryContainer(),
+                      Opacity(
+                        opacity: 0.8,
+                        child: Image(
+                          width: 230.w,
+                          image: AssetImage("assets/health_logs/no_data.png"),
+                        ),
+                      ),
+                      Center(
+                        child: Text(
+                          "No Checkup History Found",
+                          style: TextStyle(
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w500,
+                            color: kBlackColor.withOpacity(0.7),
+                          ),
+                        ),
+                      ),
+                      kHeight30,
+                    ],
+                  ),
+                );
+              }
+              return SingleChildScrollView(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 15.w),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: ListView.separated(
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            if (index.isEven) {
+                              return CheckupHistoryContainer(
+                                checkupHistory:
+                                    state.checkupHistory!.checkups[index],
+                              );
+                            }
+                            return SizedBox();
+                          },
+                          separatorBuilder: (context, index) => kHeight10,
+                          itemCount: state.checkupHistory!.checkups.length,
+                        ),
+                      ),
+                      kWidth15,
+                      Expanded(
+                        child: ListView.separated(
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            if (index.isEven) {
+                              return CheckupHistoryContainer(
+                                checkupHistory:
+                                    state.checkupHistory!.checkups[index + 1],
+                              );
+                            }
+                            return const SizedBox();
+                          },
+                          separatorBuilder: (context, index) => kHeight10,
+                          itemCount: state.checkupHistory!.checkups.length - 1,
+                        ),
+                      ),
                     ],
                   ),
                 ),
-                kWidth15,
-                Expanded(
-                  child: Column(
-                    children: [
-                      CheckupHistoryContainer(),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+              );
+            },
           ),
         ],
       ),

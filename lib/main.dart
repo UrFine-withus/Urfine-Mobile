@@ -4,9 +4,11 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hive/hive.dart';
 import 'package:urfine/application/add_user_data/add_user_data_bloc.dart';
 import 'package:urfine/application/authentication/authentication_bloc.dart';
+import 'package:urfine/application/checkup_history/checkup_history_bloc.dart';
 import 'package:urfine/application/emergency_contacts/emergency_contacts_bloc.dart';
 import 'package:urfine/application/dietry_plan_chat/dietry_chat_bloc.dart';
 import 'package:urfine/application/health_logs/health_logs_bloc.dart';
+import 'package:urfine/application/medical_records/medical_records_bloc.dart';
 import 'package:urfine/application/request_checkup/request_checkup_bloc.dart';
 import 'package:urfine/domain/di/injectable.dart';
 import 'package:urfine/domain/dietry_plan/model/message_db_model.dart';
@@ -72,6 +74,12 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<HealthLogsBloc>(
           create: (context) => getIt<HealthLogsBloc>(),
+        ),
+        BlocProvider<CheckupHistoryBloc>(
+          create: (context) => getIt<CheckupHistoryBloc>(),
+        ),
+        BlocProvider<MedicalRecordsBloc>(
+          create: (context) => getIt<MedicalRecordsBloc>(),
         ),
       ],
       child: ScreenUtilInit(

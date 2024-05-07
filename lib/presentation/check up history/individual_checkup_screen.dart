@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:urfine/domain/checkup_history/model/checkup_history_model.dart';
 import 'package:urfine/presentation/core/colors.dart';
 import 'package:urfine/presentation/core/const_widgets.dart';
 
 class IndividualCheckupScreen extends StatelessWidget {
+  const IndividualCheckupScreen({super.key, required this.checkupHistory});
+  final Checkup checkupHistory;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +41,7 @@ class IndividualCheckupScreen extends StatelessWidget {
                     horizontal: 13.0.sp,
                   ),
                   child: Text(
-                    "30/12/24",
+                    "${checkupHistory.createdAt.day}/${checkupHistory.createdAt.month}/${checkupHistory.createdAt.year}",
                     style: TextStyle(
                       fontSize: 15.0.sp,
                       fontWeight: FontWeight.w800,
@@ -50,7 +53,7 @@ class IndividualCheckupScreen extends StatelessWidget {
               ),
               kHeight20,
               Text(
-                "Dr. Ibrahim",
+                checkupHistory.doctorIncharge,
                 style: TextStyle(
                   fontSize: 24.sp,
                   fontWeight: FontWeight.w600,
@@ -58,116 +61,122 @@ class IndividualCheckupScreen extends StatelessWidget {
               ),
               kHeight20,
               Text(
-                '''Through meticulous examination and attentive listening, we elucidated nuances in their symptomatology, unveiling potential underlying factors. After integrating findings from the physical examination with insights gleaned from their history, I crafted a provisional diagnostic framework. Together, we deliberated on treatment modalitiesI conducted a thorough assessment of their presenting complaint of [chief complaint]. After reviewing their medical history, performing a focused physical examination, and discussing their symptoms in detail''',
+                checkupHistory.description,
                 style: TextStyle(
                   fontSize: 17.sp,
                   fontWeight: FontWeight.w300,
                 ),
               ),
               kHeight20,
-              Text(
-                "Medicines",
-                style: TextStyle(
-                  fontSize: 20.sp,
-                  fontWeight: FontWeight.w600,
+              if (checkupHistory.medicine.isNotEmpty)
+                Text(
+                  "Medicines",
+                  style: TextStyle(
+                    fontSize: 20.sp,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-              ),
-              kHeight10,
-              ListView.separated(
-                padding: EdgeInsets.all(0),
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  return Row(
-                    children: [
-                      kWidth10,
-                      CircleAvatar(
-                        radius: 6,
-                        backgroundColor: kLightColor,
-                      ),
-                      kWidth10,
-                      Text(
-                        "Paracetamol",
-                        style: TextStyle(
-                          fontSize: 17.sp,
-                          fontWeight: FontWeight.w400,
+              if (checkupHistory.medicine.isNotEmpty) kHeight10,
+              if (checkupHistory.medicine.isNotEmpty)
+                ListView.separated(
+                  padding: EdgeInsets.all(0),
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    final medicine = checkupHistory.medicine[index];
+                    return Row(
+                      children: [
+                        kWidth10,
+                        CircleAvatar(
+                          radius: 6,
+                          backgroundColor: kLightColor,
                         ),
-                      ),
-                      kWidth10,
-                      Icon(
-                        Icons.remove,
-                        color: kLightColor,
-                      ),
-                      kWidth10,
-                      Text(
-                        "10",
-                        style: TextStyle(
-                          fontSize: 17.sp,
-                          fontWeight: FontWeight.w400,
+                        kWidth10,
+                        Text(
+                          medicine.name,
+                          style: TextStyle(
+                            fontSize: 17.sp,
+                            fontWeight: FontWeight.w400,
+                          ),
                         ),
-                      ),
-                    ],
-                  );
-                },
-                separatorBuilder: (context, index) {
-                  return SizedBox(
-                    height: 8.h,
-                  );
-                },
-                itemCount: 3,
-              ),
+                        kWidth10,
+                        Icon(
+                          Icons.remove,
+                          color: kLightColor,
+                        ),
+                        kWidth10,
+                        Text(
+                          medicine.quantity.toString(),
+                          style: TextStyle(
+                            fontSize: 17.sp,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                  separatorBuilder: (context, index) {
+                    return SizedBox(
+                      height: 8.h,
+                    );
+                  },
+                  itemCount: checkupHistory.medicine.length,
+                ),
               kHeight20,
-              Text(
-                "Equipments",
-                style: TextStyle(
-                  fontSize: 20.sp,
-                  fontWeight: FontWeight.w600,
+              if (checkupHistory.equipments.isNotEmpty)
+                Text(
+                  "Equipments",
+                  style: TextStyle(
+                    fontSize: 20.sp,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-              ),
-              kHeight10,
-              ListView.separated(
-                padding: EdgeInsets.all(0),
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  return Row(
-                    children: [
-                      kWidth10,
-                      CircleAvatar(
-                        radius: 6,
-                        backgroundColor: kLightColor,
-                      ),
-                      kWidth10,
-                      Text(
-                        "Wheelchair",
-                        style: TextStyle(
-                          fontSize: 17.sp,
-                          fontWeight: FontWeight.w400,
+              if (checkupHistory.equipments.isNotEmpty) kHeight10,
+              if (checkupHistory.equipments.isNotEmpty)
+                ListView.separated(
+                  padding: EdgeInsets.all(0),
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    final equipment = checkupHistory.equipments[index];
+                    return Row(
+                      children: [
+                        kWidth10,
+                        CircleAvatar(
+                          radius: 6,
+                          backgroundColor: kLightColor,
                         ),
-                      ),
-                      kWidth10,
-                      Icon(
-                        Icons.remove,
-                        color: kLightColor,
-                      ),
-                      kWidth10,
-                      Text(
-                        "1",
-                        style: TextStyle(
-                          fontSize: 17.sp,
-                          fontWeight: FontWeight.w400,
+                        kWidth10,
+                        Text(
+                          equipment.name,
+                          style: TextStyle(
+                            fontSize: 17.sp,
+                            fontWeight: FontWeight.w400,
+                          ),
                         ),
-                      ),
-                    ],
-                  );
-                },
-                separatorBuilder: (context, index) {
-                  return SizedBox(
-                    height: 8.h,
-                  );
-                },
-                itemCount: 3,
-              ),
+                        kWidth10,
+                        Icon(
+                          Icons.remove,
+                          color: kLightColor,
+                        ),
+                        kWidth10,
+                        Text(
+                          equipment.quantity.toString(),
+                          style: TextStyle(
+                            fontSize: 17.sp,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                  separatorBuilder: (context, index) {
+                    return SizedBox(
+                      height: 8.h,
+                    );
+                  },
+                  itemCount: 3,
+                ),
               kHeight30,
             ],
           ),

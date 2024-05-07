@@ -174,6 +174,7 @@ class _RequestScreenState extends State<RequestScreen> {
                             if (_doctorNeededController.text.isEmpty) {
                               showUrFineSnackbar(
                                   context, "Doctor needed cannot be empty");
+
                               return;
                             }
                             if (_nurseAssistanceController.text.isEmpty) {
@@ -187,7 +188,9 @@ class _RequestScreenState extends State<RequestScreen> {
                                   _doctorNeededController.text == "Yes",
                               nurseAssistance:
                                   _nurseAssistanceController.text == "Yes",
-                              equipmentsNeeded: _equipmentsController.text,
+                              equipmentsNeeded: _equipmentsController.text.isEmpty
+                                  ? "None"
+                                  : _equipmentsController.text,
                             );
                             final RequestModel requestModel = RequestModel(
                               details: _detailsController.text,

@@ -6,8 +6,9 @@ import 'package:urfine/presentation/med%20records%20screen/widgets/view_prescrip
 class MedRecordGrid extends StatelessWidget {
   const MedRecordGrid({
     super.key,
+    required this.imageUrlList,
   });
-
+  final List<String> imageUrlList;
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
@@ -19,8 +20,7 @@ class MedRecordGrid extends StatelessWidget {
         crossAxisSpacing: 15.dg,
       ),
       itemBuilder: (context, index) {
-        final imgUrl =
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/330px-Image_created_with_a_mobile_phone.png";
+        final imgUrl = imageUrlList[index];
         return GestureDetector(
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
@@ -55,7 +55,7 @@ class MedRecordGrid extends StatelessWidget {
           ),
         );
       },
-      itemCount: 6,
+      itemCount: imageUrlList.length,
     );
   }
 }

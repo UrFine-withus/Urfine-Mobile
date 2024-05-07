@@ -29,7 +29,7 @@ class RequireNeedsModel {
   });
   Map<String, dynamic> toJson() {
     return {
-      'docter_needed': doctorNeeded,
+      'doctor_needed': doctorNeeded,
       'nurse_assistance': nurseAssistance,
       'equipments_needed': equipmentsNeeded,
     };

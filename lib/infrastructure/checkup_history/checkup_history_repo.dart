@@ -4,30 +4,29 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:urfine/core/base_url.dart';
+import 'package:urfine/domain/checkup_history/i_checkup_history.dart';
+import 'package:urfine/domain/checkup_history/model/checkup_history_model.dart';
 import 'package:urfine/domain/di/injectable.dart';
 import 'package:urfine/domain/failure/failure.dart';
-import 'package:urfine/domain/request_checkup/i_request_repo.dart';
-import 'package:urfine/domain/dietry_plan/model/message_db_model.dart';
-import 'package:urfine/domain/request_checkup/model/request_model.dart';
 import 'package:urfine/domain/token_manager/user_data_model.dart';
 
-@LazySingleton(as: IRequestRepo)
-class RequestRepo extends IRequestRepo {
+@LazySingleton(as: ICheckupHistory)
+class CheckupHistoryRepo extends ICheckupHistory {
   @override
-  Future<Either<MainFailure, void>> checkupRequest(
-      RequestModel requestModel) async {
-    final uid = getIt<UserDataModel>().uid;
-    log(requestModel.toJson().toString());
+  Future<Either<MainFailure, CheckupHistoryModel>> getCheckupHistory() async {
+    final uid = getIt.get<UserDataModel>().uid;
     try {
-      final response = await Dio(BaseOptions()).post(
-        "$baseUrl/checkups?userId=$uid",
-        data: requestModel.toJson(),
-      );
-      log(response.data.toString());
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        return right(null);
+      final respose =
+          await Dio(BaseOptions()).get("$baseUrl/checkups/result?userId=$uid");
+
+      if (respose.statusCode == 200) {
+        log(CheckupHistoryModel.fromJson(respose.data)
+            .checkups
+            .length
+            .toString());
+        return Right(CheckupHistoryModel.fromJson(respose.data));
       } else {
-        return left(MainFailure.serverFailure());
+        return Left(MainFailure.serverFailure());
       }
     } catch (e) {
       log(e.toString());

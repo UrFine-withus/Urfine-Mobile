@@ -20,9 +20,23 @@ class HealthLogsScreen extends StatelessWidget {
             BlocConsumer<HealthLogsBloc, HealthLogsState>(
               listener: (context, state) {
                 state.fetDatesFailureOrSuccess.fold(() {}, (a) {
-                  a.fold((l) {}, (r) {
+                  a.fold((l) {
+                    showUrFineSnackbar(
+                      context,
+                      l.when(
+                        serverFailure: () => "Server under maintenance",
+                        noInternet: () => "No Internet",
+                        otherFailure: () => "Something went wrong",
+                        clientFailure: () => "check your internet connection",
+                        authFailure: (message) {
+                          return message;
+                        },
+                      ),
+                    );
+                  }, (r) {
                     if (state.logs == null &&
-                        state.fetchLogsFailureOrSuccess.isNone()) {
+                        state.fetchLogsFailureOrSuccess.isNone() &&
+                        state.dates!.userLogDates.isNotEmpty) {
                       BlocProvider.of<HealthLogsBloc>(context).add(
                           HealthLogsEvent.fatchLogs(
                               state.dates!.userLogDates.first["string_date"]));
@@ -46,7 +60,9 @@ class HealthLogsScreen extends StatelessWidget {
                     child: Center(child: loadingWidget),
                   );
                 }
-                if (state.logs == null || state.logs!.healthLog.isEmpty) {
+                if (state.logs == null ||
+                    state.dates!.userLogDates.isEmpty ||
+                    state.logs!.healthLog.isEmpty) {
                   return SizedBox(
                     height: 550.h,
                     child: Column(
@@ -78,12 +94,11 @@ class HealthLogsScreen extends StatelessWidget {
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25),
                   child: ListView.separated(
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
                       return HelathLogCard(
-                          healthLog: state.logs!.healthLog[index]
-                      );
+                          healthLog: state.logs!.healthLog[index]);
                     },
                     separatorBuilder: (context, index) => kHeight25,
                     itemCount: state.logs!.healthLog.length,

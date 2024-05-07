@@ -8,6 +8,7 @@ import 'package:dio/dio.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:urfine/presentation/core/colors.dart';
+import 'package:urfine/presentation/core/const_widgets.dart';
 
 class ViewPrescriptionScreen extends StatelessWidget {
   ViewPrescriptionScreen({super.key, required this.imageUrl});
@@ -16,7 +17,8 @@ class ViewPrescriptionScreen extends StatelessWidget {
   bool isSuccess = false;
   void _startDownloading(
       BuildContext context, final Function okCallback) async {
-    String fileName = "img.png";
+    final time = DateTime.now().millisecondsSinceEpoch;
+    String fileName = "$time.jpeg";
 
     String path = await _getFilePath(fileName);
 
@@ -30,6 +32,7 @@ class ViewPrescriptionScreen extends StatelessWidget {
         deleteOnError: true,
       ).then((_) {
         isSuccess = true;
+        showUrFineSnackbar(context, "Downloaded Successfully");
         log("success");
       });
     } catch (e) {
@@ -118,7 +121,7 @@ class ViewPrescriptionScreen extends StatelessWidget {
                 ),
               ),
               imageProvider: NetworkImage(
-                'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1280px-Image_created_with_a_mobile_phone.png',
+                imageUrl,
               ),
             ),
           ),

@@ -48,7 +48,7 @@ class UserDetailsRepo extends IUserDetailsRepo {
         return left(const MainFailure.serverFailure());
       }
     } catch (e) {
-      log(e.toString());
+      log("usr" + e.toString());
       if (e is DioException && e.response?.statusCode == 400) {
         return left(const MainFailure.otherFailure());
       } else if (e is DioException && e.response?.statusCode == 500 ||

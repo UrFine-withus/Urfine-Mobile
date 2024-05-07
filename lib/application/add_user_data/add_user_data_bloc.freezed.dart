@@ -16,10 +16,43 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$AddUserDataEvent {
-  AddUserModel get model => throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $AddUserDataEventCopyWith<AddUserDataEvent> get copyWith =>
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(AddUserModel model) $default, {
+    required TResult Function() done,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(AddUserModel model)? $default, {
+    TResult? Function()? done,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(AddUserModel model)? $default, {
+    TResult Function()? done,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_AddUserDataEvent value) $default, {
+    required TResult Function(_Done value) done,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_AddUserDataEvent value)? $default, {
+    TResult? Function(_Done value)? done,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_AddUserDataEvent value)? $default, {
+    TResult Function(_Done value)? done,
+    required TResult orElse(),
+  }) =>
       throw _privateConstructorUsedError;
 }
 
@@ -28,8 +61,6 @@ abstract class $AddUserDataEventCopyWith<$Res> {
   factory $AddUserDataEventCopyWith(
           AddUserDataEvent value, $Res Function(AddUserDataEvent) then) =
       _$AddUserDataEventCopyWithImpl<$Res, AddUserDataEvent>;
-  @useResult
-  $Res call({AddUserModel model});
 }
 
 /// @nodoc
@@ -41,28 +72,13 @@ class _$AddUserDataEventCopyWithImpl<$Res, $Val extends AddUserDataEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? model = null,
-  }) {
-    return _then(_value.copyWith(
-      model: null == model
-          ? _value.model
-          : model // ignore: cast_nullable_to_non_nullable
-              as AddUserModel,
-    ) as $Val);
-  }
 }
 
 /// @nodoc
-abstract class _$$AddUserDataEventImplCopyWith<$Res>
-    implements $AddUserDataEventCopyWith<$Res> {
+abstract class _$$AddUserDataEventImplCopyWith<$Res> {
   factory _$$AddUserDataEventImplCopyWith(_$AddUserDataEventImpl value,
           $Res Function(_$AddUserDataEventImpl) then) =
       __$$AddUserDataEventImplCopyWithImpl<$Res>;
-  @override
   @useResult
   $Res call({AddUserModel model});
 }
@@ -119,18 +135,179 @@ class _$AddUserDataEventImpl implements _AddUserDataEvent {
   _$$AddUserDataEventImplCopyWith<_$AddUserDataEventImpl> get copyWith =>
       __$$AddUserDataEventImplCopyWithImpl<_$AddUserDataEventImpl>(
           this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(AddUserModel model) $default, {
+    required TResult Function() done,
+  }) {
+    return $default(model);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(AddUserModel model)? $default, {
+    TResult? Function()? done,
+  }) {
+    return $default?.call(model);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(AddUserModel model)? $default, {
+    TResult Function()? done,
+    required TResult orElse(),
+  }) {
+    if ($default != null) {
+      return $default(model);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_AddUserDataEvent value) $default, {
+    required TResult Function(_Done value) done,
+  }) {
+    return $default(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_AddUserDataEvent value)? $default, {
+    TResult? Function(_Done value)? done,
+  }) {
+    return $default?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_AddUserDataEvent value)? $default, {
+    TResult Function(_Done value)? done,
+    required TResult orElse(),
+  }) {
+    if ($default != null) {
+      return $default(this);
+    }
+    return orElse();
+  }
 }
 
 abstract class _AddUserDataEvent implements AddUserDataEvent {
   const factory _AddUserDataEvent(final AddUserModel model) =
       _$AddUserDataEventImpl;
 
-  @override
   AddUserModel get model;
-  @override
   @JsonKey(ignore: true)
   _$$AddUserDataEventImplCopyWith<_$AddUserDataEventImpl> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$DoneImplCopyWith<$Res> {
+  factory _$$DoneImplCopyWith(
+          _$DoneImpl value, $Res Function(_$DoneImpl) then) =
+      __$$DoneImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$DoneImplCopyWithImpl<$Res>
+    extends _$AddUserDataEventCopyWithImpl<$Res, _$DoneImpl>
+    implements _$$DoneImplCopyWith<$Res> {
+  __$$DoneImplCopyWithImpl(_$DoneImpl _value, $Res Function(_$DoneImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$DoneImpl implements _Done {
+  const _$DoneImpl();
+
+  @override
+  String toString() {
+    return 'AddUserDataEvent.done()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$DoneImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(AddUserModel model) $default, {
+    required TResult Function() done,
+  }) {
+    return done();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(AddUserModel model)? $default, {
+    TResult? Function()? done,
+  }) {
+    return done?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(AddUserModel model)? $default, {
+    TResult Function()? done,
+    required TResult orElse(),
+  }) {
+    if (done != null) {
+      return done();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_AddUserDataEvent value) $default, {
+    required TResult Function(_Done value) done,
+  }) {
+    return done(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_AddUserDataEvent value)? $default, {
+    TResult? Function(_Done value)? done,
+  }) {
+    return done?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_AddUserDataEvent value)? $default, {
+    TResult Function(_Done value)? done,
+    required TResult orElse(),
+  }) {
+    if (done != null) {
+      return done(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Done implements AddUserDataEvent {
+  const factory _Done() = _$DoneImpl;
 }
 
 /// @nodoc

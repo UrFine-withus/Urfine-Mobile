@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:urfine/application/add_user_data/add_user_data_bloc.dart';
+import 'package:urfine/application/medical_records/medical_records_bloc.dart';
 import 'package:urfine/domain/di/injectable.dart';
 import 'package:urfine/domain/failure/failure.dart';
 import 'package:urfine/domain/token_manager/user_data_model.dart';
@@ -57,9 +58,9 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: BlocConsumer<AddUserDataBloc, AddUserDataState>(
-          listener: (context, state) {
-            state.addUserDataOption.fold(
+        child: BlocConsumer<MedicalRecordsBloc, MedicalRecordsState>(
+          listener: (context, medstate) {
+            medstate.failureOrMedicalRecords.fold(
               () {},
               (either) => either.fold(
                 (failure) {
@@ -71,221 +72,253 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                   }
                 },
                 (success) {
-                  Navigator.pushReplacementNamed(context, '/home');
+                  BlocProvider.of<AddUserDataBloc>(context)
+                      .add(const AddUserDataEvent.done());
                 },
               ),
             );
           },
-          builder: (context, state) {
-            return Stack(
-              children: [
-                SingleChildScrollView(
-                  child: SizedBox(
-                    width: 393.w,
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 37.w),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          kHeight20,
-                          Text(
-                            "User Details",
-                            style: TextStyle(
-                              fontSize: 21.sp,
-                              fontWeight: FontWeight.w700,
-                              color: kLightColor,
-                            ),
-                          ),
-                          kHeight20,
-                          FormTitleWithTextField(
-                            title: "Full Name",
-                            controller: _nameController,
-                          ),
-                          kHeight10,
-                          Row(
+          builder: (context, medstate) {
+            return BlocConsumer<AddUserDataBloc, AddUserDataState>(
+              listener: (context, state) {
+                state.addUserDataOption.fold(
+                  () {},
+                  (either) => either.fold(
+                    (failure) {
+                      if (failure == MainFailure.serverFailure()) {
+                        showUrFineSnackbar(context,
+                            " We are facing some issues. Please try again later.");
+                      } else {
+                        showUrFineSnackbar(context, "Something went wrong");
+                      }
+                    },
+                    (success) {
+                      if (state.isSubmitting || !medstate.isUploading) {
+                        log("broo");
+                        BlocProvider.of<MedicalRecordsBloc>(context)
+                            .add(const MedicalRecordsEvent.uploadMedRec(false));
+                      }
+                      Navigator.pushReplacementNamed(context, '/home');
+                    },
+                  ),
+                );
+              },
+              builder: (context, state) {
+                return Stack(
+                  children: [
+                    SingleChildScrollView(
+                      child: SizedBox(
+                        width: 393.w,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 37.w),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Expanded(
-                                child: FormTitleWithTextField(
-                                  title: "Age",
-                                  keyboardType: TextInputType.number,
-                                  controller: _ageController,
+                              kHeight20,
+                              Text(
+                                "User Details",
+                                style: TextStyle(
+                                  fontSize: 21.sp,
+                                  fontWeight: FontWeight.w700,
+                                  color: kLightColor,
                                 ),
                               ),
-                              kWidth15,
-                              Expanded(
-                                child: FormTitleWithDropDown(
-                                  title: "Gender",
-                                  dropDownList: genderList,
-                                  controller: _genderController,
-                                ),
+                              kHeight20,
+                              FormTitleWithTextField(
+                                title: "Full Name",
+                                controller: _nameController,
                               ),
-                            ],
-                          ),
-                          kHeight10,
-                          FormTitleWithTextField(
-                            title: "Address",
-                            isLarge: true,
-                            controller: _addressController,
-                          ),
-                          kHeight10,
-                          Row(
-                            children: [
-                              Expanded(
-                                child: FormTitleWithTextField(
-                                  title: "Height",
-                                  hintText: "(in cm)",
-                                  keyboardType: TextInputType.number,
-                                  controller: _heightController,
-                                ),
+                              kHeight10,
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: FormTitleWithTextField(
+                                      title: "Age",
+                                      keyboardType: TextInputType.number,
+                                      controller: _ageController,
+                                    ),
+                                  ),
+                                  kWidth15,
+                                  Expanded(
+                                    child: FormTitleWithDropDown(
+                                      title: "Gender",
+                                      dropDownList: genderList,
+                                      controller: _genderController,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              kWidth15,
-                              Expanded(
-                                child: FormTitleWithTextField(
-                                  title: "Weight",
-                                  hintText: "(in kg)",
-                                  keyboardType: TextInputType.number,
-                                  controller: _weightController,
-                                ),
+                              kHeight10,
+                              FormTitleWithTextField(
+                                title: "Address",
+                                isLarge: true,
+                                controller: _addressController,
                               ),
-                            ],
-                          ),
-                          kHeight10,
-                          Row(
-                            children: [
-                              Expanded(
-                                child: FormTitleWithTextField(
-                                  title: "Blood Group",
-                                  controller: _bloodGroupController,
-                                ),
+                              kHeight10,
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: FormTitleWithTextField(
+                                      title: "Height",
+                                      hintText: "(in cm)",
+                                      keyboardType: TextInputType.number,
+                                      controller: _heightController,
+                                    ),
+                                  ),
+                                  kWidth15,
+                                  Expanded(
+                                    child: FormTitleWithTextField(
+                                      title: "Weight",
+                                      hintText: "(in kg)",
+                                      keyboardType: TextInputType.number,
+                                      controller: _weightController,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              kWidth15,
-                              Expanded(
-                                child: FormTitleWithDropDown(
-                                  title: "Suffered chickenpox?",
-                                  dropDownList: chickenpox,
-                                  controller: _chickenpoxController,
-                                ),
+                              kHeight10,
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: FormTitleWithTextField(
+                                      title: "Blood Group",
+                                      controller: _bloodGroupController,
+                                    ),
+                                  ),
+                                  kWidth15,
+                                  Expanded(
+                                    child: FormTitleWithDropDown(
+                                      title: "Suffered chickenpox?",
+                                      dropDownList: chickenpox,
+                                      controller: _chickenpoxController,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                          kHeight10,
-                          Row(
-                            children: [
-                              Expanded(
-                                child: FormTitleWithDropDown(
-                                  title: "Suffered Measles?",
-                                  dropDownList: measles,
-                                  controller: _measlesController,
-                                ),
+                              kHeight10,
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: FormTitleWithDropDown(
+                                      title: "Suffered Measles?",
+                                      dropDownList: measles,
+                                      controller: _measlesController,
+                                    ),
+                                  ),
+                                  kWidth15,
+                                  Expanded(
+                                    child: FormTitleWithDropDown(
+                                      title: "Hepatitis b vaccine?",
+                                      controller: _hepatitisController,
+                                      dropDownList: hepatitis,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              kWidth15,
-                              Expanded(
-                                child: FormTitleWithDropDown(
-                                  title: "Hepatitis b vaccine?",
-                                  controller: _hepatitisController,
-                                  dropDownList: hepatitis,
-                                ),
+                              kHeight10,
+                              FormTitleWithTextField(
+                                title: "Allergies",
+                                isLarge: true,
+                                hintText: "(optional)",
+                                controller: _allergiesController,
                               ),
-                            ],
-                          ),
-                          kHeight10,
-                          FormTitleWithTextField(
-                            title: "Allergies",
-                            isLarge: true,
-                            hintText: "(optional)",
-                            controller: _allergiesController,
-                          ),
-                          kHeight10,
-                          MedicalLogsUploadWidget(),
-                          kHeight20,
-                          _SubmitButton(
-                            onPressed: () {
-                              if (_nameController.text.isEmpty) {
-                                showUrFineSnackbar(context, "Name is required");
-                                return;
-                              }
-                              if (_ageController.text.isEmpty) {
-                                showUrFineSnackbar(context, "Age is required");
-                                return;
-                              }
-                              if (_genderController.text.isEmpty) {
-                                showUrFineSnackbar(
-                                    context, "Please select Gender");
-                                return;
-                              }
-                              if (_addressController.text.isEmpty) {
-                                showUrFineSnackbar(
-                                    context, "Address is required");
-                                return;
-                              }
-                              if (_heightController.text.isEmpty) {
-                                showUrFineSnackbar(
-                                    context, "Height is required");
-                                return;
-                              }
-                              if (_weightController.text.isEmpty) {
-                                showUrFineSnackbar(
-                                    context, "Weight is required");
-                                return;
-                              }
-                              if (_bloodGroupController.text.isEmpty) {
-                                showUrFineSnackbar(
-                                    context, "Blood Group is required");
-                                return;
-                              }
-                              if (_chickenpoxController.text.isEmpty) {
-                                showUrFineSnackbar(
-                                    context, "Chickenpox is required");
-                                return;
-                              }
-                              if (_measlesController.text.isEmpty) {
-                                showUrFineSnackbar(
-                                    context, "Measles is required");
-                                return;
-                              }
-                              if (_hepatitisController.text.isEmpty) {
-                                showUrFineSnackbar(
-                                    context, "Hepatitis is required");
-                                return;
-                              }
+                              kHeight10,
+                              MedicalLogsUploadWidget(),
+                              kHeight20,
+                              _SubmitButton(
+                                onPressed: () {
+                                  if (_nameController.text.isEmpty) {
+                                    showUrFineSnackbar(
+                                        context, "Name is required");
+                                    return;
+                                  }
+                                  if (_ageController.text.isEmpty) {
+                                    showUrFineSnackbar(
+                                        context, "Age is required");
+                                    return;
+                                  }
+                                  if (_genderController.text.isEmpty) {
+                                    showUrFineSnackbar(
+                                        context, "Please select Gender");
+                                    return;
+                                  }
+                                  if (_addressController.text.isEmpty) {
+                                    showUrFineSnackbar(
+                                        context, "Address is required");
+                                    return;
+                                  }
+                                  if (_heightController.text.isEmpty) {
+                                    showUrFineSnackbar(
+                                        context, "Height is required");
+                                    return;
+                                  }
+                                  if (_weightController.text.isEmpty) {
+                                    showUrFineSnackbar(
+                                        context, "Weight is required");
+                                    return;
+                                  }
+                                  if (_bloodGroupController.text.isEmpty) {
+                                    showUrFineSnackbar(
+                                        context, "Blood Group is required");
+                                    return;
+                                  }
+                                  if (_chickenpoxController.text.isEmpty) {
+                                    showUrFineSnackbar(
+                                        context, "Chickenpox is required");
+                                    return;
+                                  }
+                                  if (_measlesController.text.isEmpty) {
+                                    showUrFineSnackbar(
+                                        context, "Measles is required");
+                                    return;
+                                  }
+                                  if (_hepatitisController.text.isEmpty) {
+                                    showUrFineSnackbar(
+                                        context, "Hepatitis is required");
+                                    return;
+                                  }
 
-                              final SufferedDiseases sufferedDiseases =
-                                  SufferedDiseases(
-                                chickenPox:
-                                    _chickenpoxController.text == "true",
-                                measles: _measlesController.text == "true",
-                                hepatitis: _hepatitisController.text == "true",
-                                allergies: _allergiesController.text,
-                              );
-                              final AddUserModel addUserModel = AddUserModel(
-                                userID: getIt.get<UserDataModel>().uid,
-                                name: _nameController.text,
-                                age: _ageController.text,
-                                gender: _genderController.text,
-                                address: _addressController.text,
-                                height: int.parse(_heightController.text),
-                                weight: int.parse(_weightController.text),
-                                bloodGroup: _bloodGroupController.text,
-                                sufferedDiseases: sufferedDiseases,
-                              );
-                              BlocProvider.of<AddUserDataBloc>(context)
-                                  .add(AddUserDataEvent(addUserModel));
-                            },
+                                  final SufferedDiseases sufferedDiseases =
+                                      SufferedDiseases(
+                                    chickenPox:
+                                        _chickenpoxController.text == "true",
+                                    measles: _measlesController.text == "true",
+                                    hepatitis:
+                                        _hepatitisController.text == "true",
+                                    allergies: _allergiesController.text,
+                                  );
+                                  final AddUserModel addUserModel =
+                                      AddUserModel(
+                                    userID: getIt.get<UserDataModel>().uid,
+                                    name: _nameController.text,
+                                    age: _ageController.text,
+                                    gender: _genderController.text,
+                                    address: _addressController.text,
+                                    height: int.parse(_heightController.text),
+                                    weight: int.parse(_weightController.text),
+                                    bloodGroup: _bloodGroupController.text,
+                                    sufferedDiseases: sufferedDiseases,
+                                  );
+                                  BlocProvider.of<AddUserDataBloc>(context)
+                                      .add(AddUserDataEvent(addUserModel));
+                                },
+                              ),
+                              kHeight30
+                            ],
                           ),
-                          kHeight30
-                        ],
+                        ),
                       ),
                     ),
-                  ),
-                ),
-                if (state.isSubmitting)
-                  Container(
-                    width: double.infinity,
-                    height: double.infinity,
-                    color: kBlackColor.withOpacity(0.3),
-                    child: loadingWidget,
-                  )
-              ],
+                    if (state.isSubmitting)
+                      Container(
+                        width: double.infinity,
+                        height: double.infinity,
+                        color: kBlackColor.withOpacity(0.3),
+                        child: loadingWidget,
+                      )
+                  ],
+                );
+              },
             );
           },
         ),

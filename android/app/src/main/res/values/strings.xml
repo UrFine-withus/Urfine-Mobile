@@ -1,0 +1,4 @@
+<resources>
+    <!-- ... other string resources ... -->
+    <string name="default_notification_channel_id">ecube_channel</string>
+</resources>

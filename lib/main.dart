@@ -33,19 +33,77 @@ import 'package:urfine/presentation/welcome/welcome_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
-  await configureInjuction();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await FirebaseMessaging.instance.setAutoInitEnabled(true);
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  await configureInjuction();
   await Hive.initFlutter();
   if (!Hive.isAdapterRegistered(MessageDBModelAdapter().typeId)) {
     Hive.registerAdapter(MessageDBModelAdapter());
   }
   await dotenv.load(fileName: "lib/.env");
   getIt.registerSingleton<UserDataModel>(UserDataModel());
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
+
+  NotificationSettings settings = await messaging.requestPermission(
+    alert: true,
+    announcement: false,
+    badge: true,
+    carPlay: false,
+    criticalAlert: false,
+    provisional: false,
+    sound: true,
+  );
+  FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {});
+  const AndroidNotificationChannel channel = AndroidNotificationChannel(
+    'high_importance_channel',
+    'High Importance Notifications',
+    description: 'This channel is used for important notifications.',
+    importance: Importance.max,
+  );
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+  await flutterLocalNotificationsPlugin
+      .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>()
+      ?.createNotificationChannel(channel);
+
+  var initializationSettingsAndroid =
+      const AndroidInitializationSettings('@drawable/launcher_icon');
+  var initializationSettings =
+      InitializationSettings(android: initializationSettingsAndroid);
+  await flutterLocalNotificationsPlugin.initialize(
+    initializationSettings,
+  );
+
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    RemoteNotification? notification = message.notification;
+    AndroidNotification? android = message.notification!.android;
+
+    if (notification != null && android != null) {
+      flutterLocalNotificationsPlugin.show(
+        notification.hashCode,
+        notification.title,
+        notification.body,
+        NotificationDetails(
+          android: AndroidNotificationDetails(
+            channel.id,
+            channel.name,
+            channelDescription: channel.description,
+            icon: android.smallIcon,
+            color: kWhiteColor,
+          ),
+        ),
+      );
+    }
+  });
   runApp(const MyApp());
 }
 
@@ -124,7 +182,6 @@ class MyApp extends StatelessWidget {
                 } else if (settings.name == '/checkupHistory') {
                   return CheckUpHistoryScreen();
                 }
-
                 return const SizedBox();
               },
               transitionsBuilder:
@@ -141,4 +198,8 @@ class MyApp extends StatelessWidget {
       ),
     );
   }
+}
+
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
 }

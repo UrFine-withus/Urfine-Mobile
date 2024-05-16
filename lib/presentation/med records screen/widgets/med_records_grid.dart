@@ -20,7 +20,7 @@ class MedRecordGrid extends StatelessWidget {
         crossAxisSpacing: 15.dg,
       ),
       itemBuilder: (context, index) {
-        final imgUrl = imageUrlList[index];
+        final imgUrl = imageUrlList[imageUrlList.length - index - 1];
         return GestureDetector(
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(

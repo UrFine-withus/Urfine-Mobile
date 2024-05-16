@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
@@ -107,12 +108,14 @@ class AuthRepository extends IAuthRepo {
   @override
   Future<Either<MainFailure, void>> addUser(String email) async {
     final uid = getIt.get<UserDataModel>().uid;
+    final id = await FirebaseMessaging.instance.getToken();
     try {
       final response = await Dio(BaseOptions()).post(
         '$baseUrl/userdata',
         data: {
           'email': email,
           '_userID': uid,
+          'fcm_id': id,
         },
       );
       if (response.statusCode == 200) {
@@ -189,13 +192,18 @@ class AuthRepository extends IAuthRepo {
   @override
   Future<Either<MainFailure, void>> getUserName() async {
     final uid = getIt.get<UserDataModel>().uid;
+    final id = await FirebaseMessaging.instance.getToken();
     dev.log(uid);
     try {
-      final response =
-          await Dio(BaseOptions()).post('$baseUrl/userdata/check?userId=$uid');
+      final response = await Dio(BaseOptions()).patch(
+        '$baseUrl/userdata/check?userId=$uid',
+        data: {
+          "fcm_id": id,
+        },
+      );
       if (response.statusCode == 200) {
         final String name =
-            response.data.containsKey('user') ? response.data['user'] : "";
+            response.data.containsKey('name') ? response.data['name'] : "";
         getIt.get<UserDataModel>().name = name;
         return right(null);
       } else {

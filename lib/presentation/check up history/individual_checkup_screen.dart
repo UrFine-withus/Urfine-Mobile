@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:urfine/domain/checkup_history/model/checkup_history_model.dart';
@@ -9,6 +11,9 @@ class IndividualCheckupScreen extends StatelessWidget {
   final Checkup checkupHistory;
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      log(checkupHistory.medicine.toString());
+    });
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -175,7 +180,7 @@ class IndividualCheckupScreen extends StatelessWidget {
                       height: 8.h,
                     );
                   },
-                  itemCount: 3,
+                  itemCount: checkupHistory.equipments.length,
                 ),
               kHeight30,
             ],
